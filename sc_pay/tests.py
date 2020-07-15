@@ -62,10 +62,10 @@ from django.test import TestCase
 import requests
 
 
-url ="http://media-manage-test.smartcinemausa.com"
-
-body = {"positiveTitleValue":0,"kdmMovieId":1,"filmId":11,"videoSeconds":1000,"movieSubtitle":3,"movieLanguage":4,"narratorTitle":"","audioId":"117","positiveTitle":"四个正片标题必须一样","isNarrator":"3","type":"0","screenType":1,"showChangeBtn":0,
-        "streamList":[]}
+# url ="http://media-manage-test.smartcinemausa.com"
+#
+# body = {"positiveTitleValue":0,"kdmMovieId":1,"filmId":11,"videoSeconds":1000,"movieSubtitle":3,"movieLanguage":4,"narratorTitle":"","audioId":"117","positiveTitle":"四个正片标题必须一样","isNarrator":"3","type":"0","screenType":1,"showChangeBtn":0,
+#         "streamList":[]}
 
 
 
