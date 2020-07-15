@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+{% block title %}用户充值{% endblock %}
+{% load staticfiles %}
+
+
+{% block content %}
+
+
+
+    <div class="admin-biaogelist">
+
+        <div class="listbiaoti am-cf">
+            <ul class="am-icon-flag on"> 创建页面</ul>
+            <dl class="am-icon-home" style="float: right;"> 当前位置： 创建页面 > <a href="#">创建影片</a></dl>
+        </div>
+
+        <div style="margin: 10px 6px 0px 16px;width: 600px">
+            <h3>执行结果查看:>>{{ toast }}</h3>
+        </div>
+        <div class="fbneirong">
+            <form class="form-horizontal" id="select_username" method="get" action='/createfilm'>
+                <div class="form-group  has-feedback">
+                    <label class="control-label col-md-1 text-primary" for="film_name">电影名称：</label>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" id="film_name"
+                               aria-describedby="inputSuccess3Status" name="film_name" placeholder="请输入创建的影片名"
+                               value="" inputk="userinfo" lable="电影名称" >
+                        <span class="glyphicon glyphicon-facetime-video form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                </div>
+                <div class="form-group  has-feedback">
+                    <label class="control-label col-md-1 text-primary" for="region_Id">区域ID：</label>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" id="region_Id" name="region_Id" inputk="userinfo" lable="区域ID"
+                               aria-describedby="inputSuccess3Status" placeholder="请添加的站点区域ID(北美1,台湾2,韩国3,港澳4)" value="">
+                        <span class="glyphicon glyphicon-random form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                </div>
+
+                <div class="am-form-group am-cf">
+                    <div class="you" style="margin-left: 8%;">
+                        <button type="submit" class="am-btn am-btn-success am-radius" id="send1">点 击 提 交</button>
+                            <!--   onclick="info_ajax('#add_project', '/api/add_project/')" -->
+
+                    </div>
+                </div>
+            </form>
+
+            <br>
+            <button class="btn btn-success" id="view_logs">
+                查看实时日志
+            </button>
+            <button class="btn btn-danger" id="close_logs" style="margin-left: 40px;">
+                关闭实时日志
+            </button>
+            <div style="height: 200px; overflow: auto;" id="content_logs">
+               <div id="file_result" style="font-size: 14px;"></div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <script>
+
+        $(function () {
+            // 只要页面框架加载完成自动执行此函数
+            Binkfunction();
+            //WebSocketTest();
+
+        });
+
+        function WebSocketTest() {
+
+            if ("WebSocket" in window) {
+            alert("您的浏览器支持 WebSocket");
+
+            // 打开一个 Web soket
+            ws = new WebSocket("ws://127.0.0.1:8001/data/log");
+
+            ws.onopen = function () {
+                // Web Soket 已连接上，使用 send() 放大发送数据
+                ws.send("发送数据");
+                alert("数据发送中...")
+            };
+
+            ws.onmessage = function (evt) {
+                var received_msg = evt.data;
+                alert("数据接受中");
+                alert("数据：" + received_msg);
+                let txt = document.getElementById('test').innerHTML;
+                document.getElementById('test').innerHTML = received_msg + '</br>' + txt
+            };
+
+
+        }
+        else {
+            // 浏览器不支持 WebSocket
+            alert("您的浏览器不支持 WebSocket!");
+        }
+
+        }
+
+
+        // 文件内容
+
+         $('#view_logs').click(function () {
+            $.getJSON('/ajax_file/', function (ret) {
+              //返回值 ret 在这里是一个字典
+              console.log(ret.length);
+              for (var i = ret.length - 1; i >= 0; i--) {
+                  $('#file_result').append(ret[i] + '<br>');
+              }
+          });
+          $("#content_logs").scrollTop($("#content_logs")[0].scrollHeight);
+          });
+
+          $('#close_logs').click(function () {
+              console.log("删除日志内容");
+              $('#file_result').empty();
+          });
+
+
+
+
+        function Binkfunction() {
+
+            $('form button[id="send1"]').click(function () {
+                //  一点击submit执行此函数内容
+
+                var flag = true;
+
+                $('form .fbneirong span').remove();
+
+
+                $('.fbneirong form input[inputk="userinfo"]').each(function () {
+                    // 每一个元素执行此匿名函数
+                    // this
+
+                    console.log(this);
+                    var val = $(this).val();
+                    console.log('检测是否有值：',val.length);
+                    if (val.length<=0){
+
+                        var label = $(this).attr('lable');
+                        console.log(label);
+                        alert(label + "不能为空");
+                        flag = false;
+                    }
+
+                });
+                return flag;
+
+            });
+
+
+            $('form button[id="send2"]').click(function () {
+                //  一点击submit执行此函数内容
+
+                var flag = true;
+
+                $('form .fbneirong span').remove();
+
+
+                $('.fbneirong form input[inputk="account"]').each(function () {
+                    // 每一个元素执行此匿名函数
+                    // this
+
+                    console.log(this);
+                    var val = $(this).val();
+                    console.log('检测是否有值：',val.length);
+                    if (val.length<=0){
+
+                        var label = $(this).attr('lable');
+                        console.log(label);
+                        alert(label + "不能为空");
+                        flag = false;
+                    }
+
+                });
+                return flag;
+
+            });
+
+
+        }
+    </script>
+
+{% endblock %}

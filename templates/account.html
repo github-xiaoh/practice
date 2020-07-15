@@ -1,0 +1,253 @@
+{% extends "base.html" %}
+{% block title %}用户充值{% endblock %}
+{% load staticfiles %}
+
+
+{% block content %}
+
+    <div class="admin-biaogelist">
+
+        <div class="listbiaoti am-cf">
+            <ul class="am-icon-flag on"> 充值页面</ul>
+            <dl class="am-icon-home" style="float: right;"> 当前位置： 充值影点 > <a href="#">海外充值</a></dl>
+        </div>
+
+        <div class="fbneirong">
+            <form class="form-horizontal" id="select_username" method="get" action='/userInfo/1/'>
+                <div class="form-group  has-feedback">
+                    <label class="control-label col-md-1 text-primary" for="user_phone">手机号：</label>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" id="user_phone"
+                               aria-describedby="inputSuccess3Status" name="user_phone" placeholder="请输入用户手机号"
+                               value="" inputk="userinfo" lable="手机号" oninput = "value=value.replace(/[^\d]/g,'')">
+                        <span class="glyphicon glyphicon-user form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                </div>
+                <div class="form-group  has-feedback">
+                    <label class="control-label col-md-1 text-primary" for="user_name">用户昵称：</label>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" id="user_name" name="user_name"
+                               aria-describedby="inputSuccess3Status" placeholder="请输入要搜索的用户昵称" value="">
+                        <span class="glyphicon glyphicon-usd form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                </div>
+
+                <div class="am-form-group am-cf">
+                    <div class="you" style="margin-left: 8%;">
+                        <button type="submit" class="am-btn am-btn-success am-radius" id="send1">点 击 提 交</button>
+                            <!--   onclick="info_ajax('#add_project', '/api/add_project/')" -->
+
+                    </div>
+                </div>
+            </form>
+
+
+            <form class="am-form am-g" id="report_list" name="report_list">
+                <table width="100%" class="am-table am-table-bordered am-table-radius am-table-striped">
+                    <thead>
+                    <tr class="am-success">
+                        <th class="table-check"><input type="checkbox" id="select_all"/></th>
+                        <th class="table-title">序号</th>
+                        <th class="table-type">用户名</th>
+                        <th class="table-date am-hide-sm-only">手机号</th>
+                        <th class="table-title">用户邮箱</th>
+                        <th class="table-title">用户头像</th>
+                        <th class="table-title">用户RegionId</th>
+                        <th width="163px" class="table-title">用户studio</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for foo in data.1 %}
+                        <tr>
+                            <td><input type="checkbox" name="report_{{ foo.id }}" value="{{ foo.id }}"/></td>
+                            <td>{{ foo.id }}</td>
+                            <td><a href="#">{{ foo.u_nickname }}</a></td>
+                            <td>{{ foo.u_mobile }}</td>
+                            <td>{{ foo.u_email }}</td>
+                            <td><a href="{{ foo.u_image }}">{{ foo.u_image }}</a></td>
+                            <td>{{ foo.region_id }}</td>
+                            <td>{{ foo.u_studio }}</td>
+                        </tr>
+                    {% endfor %}
+
+
+                    </tbody>
+                </table>
+
+                <ul class="am-pagination am-fr">
+                    {{ data.0 }}
+    {#                <li><a href='/sds/ds/'>首页</a></li>#}
+    {#                <li><a href=''><<</a></li>#}
+    {#                <li><a href='/api/report_list/38/' >尾页</a></li>#}
+                </ul>
+            </form>
+
+
+        <form class="form-horizontal" id="add_account" method="get" action="/account/1/">
+                <div class="form-group  has-feedback">
+                    <label class="control-label col-md-1 text-primary" for="userId">用户ID：</label>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" id="userId"
+                               aria-describedby="inputSuccess3Status" name="userId" placeholder="请输入用户ID"
+                               value="" inputk="account" lable="用户ID" oninput = "value=value.replace(/[^\d]/g,'')">
+                        <span class="glyphicon glyphicon-user form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                </div>
+                <div class="form-group  has-feedback">
+                    <label class="control-label col-md-1 text-primary" for="accountBalance">影点数：</label>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" id="accountBalance" name="accountBalance"
+                               aria-describedby="inputSuccess3Status" placeholder="请输入要充值的影点数" value="" inputk="account" lable="影点数" oninput = "value=value.replace(/[^\d]/g,'')">
+                        <span class="glyphicon glyphicon-usd form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                </div>
+                <div class="form-group  has-feedback">
+                    <label class="control-label col-md-1 text-primary" for="regionID">区域ID：</label>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" id="regionID" name="regionID"
+                               aria-describedby="inputSuccess3Status" placeholder="请输入要充值的区域ID：1-北美,2-台湾,3-韩国,4-港澳" value="" inputk="account" lable="区域ID" oninput = "value=value.replace(/[^\d]/g,'')">
+                        <span class="glyphicon glyphicon-usd form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                </div>
+
+                <div class="am-form-group am-cf">
+                    <div class="you" style="margin-left: 8%;">
+                        <button type="submit" class="am-btn am-btn-success am-radius" id="send2">点 击 提 交</button>
+                        <!--   onclick="info_ajax('#add_project', '/api/add_project/')" -->
+                    </div>
+                </div>
+            </form>
+
+            <form class="am-form am-g" id="report_list" name="report_list">
+                <table width="100%" class="am-table am-table-bordered am-table-radius am-table-striped">
+                    <thead>
+                    <tr class="am-success">
+                        <th class="table-check"><input type="checkbox" id="select_all" /></th>
+                        <th class="table-title">序号</th>
+                        <th class="table-type">用户ID</th>
+                        <th class="table-date am-hide-sm-only">区域ID</th>
+                        <th class="table-title">影点数</th>
+                        <th class="table-title">创建时间</th>
+                        <th class="table-title">更新时间</th>
+                        <th width="163px" class="table-title">是否删除</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for foo in data2.1 %}
+                        <tr>
+                            <td><input type="checkbox" name="report_{{ foo.id }}" value="{{ foo.id }}"/></td>
+                            <td>{{ foo.id }}</td>
+                            <td>{{ foo.user_id }}</td>
+                            <td><a href="#">{{ foo.region_id }}</a></td>
+                            <td>{{ foo.account_balance }}</td>
+                            <td>{{ foo.create_time }}</td>
+                            <td><a href="{{ foo.update_time }}">{{ foo.update_time }}</a></td>
+                            <td>{{ foo.is_del }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <ul class="am-pagination am-fr">
+                {{ data2.0 }}
+            </ul>
+
+            </form>
+        </div>
+
+
+    </div>
+
+    <script>
+
+        $(function () {
+            // 只要页面框架加载完成自动执行此函数
+            Binkfunction();
+
+        });
+
+        function Binkfunction() {
+
+            $('form button[id="send1"]').click(function () {
+                //  一点击submit执行此函数内容
+
+                var flag = true;
+
+                $('form .fbneirong span').remove();
+
+
+                $('.fbneirong form input[inputk="userinfo"]').each(function () {
+                    // 每一个元素执行此匿名函数
+                    // this
+
+                    console.log(this);
+                    var val = $(this).val();
+                    console.log('检测是否有值：',val.length);
+                    if (val.length<=0){
+
+                        var label = $(this).attr('lable');
+                        console.log(label);
+                        alert(label + "不能为空");
+                        flag = false;
+                    }
+
+                });
+                return flag;
+
+            });
+
+
+            $('form button[id="send2"]').click(function () {
+                //  一点击submit执行此函数内容
+
+                var flag = true;
+
+                $('form .fbneirong span').remove();
+
+
+                $('.fbneirong form input[inputk="account"]').each(function () {
+                    // 每一个元素执行此匿名函数
+                    // this
+
+                    console.log(this);
+                    var val = $(this).val();
+                    console.log('检测是否有值：',val.length);
+                    if (val.length<=0){
+
+                        var label = $(this).attr('lable');
+                        console.log(label);
+                        alert(label + "不能为空");
+                        flag = false;
+                    }
+
+                });
+                return flag;
+
+            });
+
+
+        }
+    </script>
+
+
+    <script type="text/javascript">
+        $('#select_all').click(function () {
+            var isChecked = $(this).prop("checked");
+            $("input[name^='report']").prop("checked", isChecked);
+        });
+
+        function download_report(id) {
+            var $eleForm = $("<form method='get'></form>");
+            $eleForm.attr("action", "/api/download_report/"+id);
+            $(document.body).append($eleForm);
+            $eleForm.submit();
+        }
+
+    </script>
+
+
+
+
+{% endblock %}

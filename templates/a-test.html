@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<title></title>
+<style>
+    .item{
+        width: 250px;
+        height: 50px;
+        position: relative;
+    }
+    .item input{
+        width: 200px;
+    }
+    .item span{
+        position: absolute;
+        left: 0px;
+        top: 20px;
+        font-size: 8px;
+        background-color: indianred;
+        color: #000000;
+        width: 205px;
+    }
+</style>
+
+<body>
+
+    <div id="q1">
+        <form>
+            <div class="item">
+                <input class="c1" type="text" name="username" label="用户名" />
+                <!--<span>用户名不能为空</span>-->
+            </div>
+            <div class="item">
+                <input class="c1" type="text" name="password" label="密码"/>
+                <!--<span>密码不能为空</span>-->
+            </div>
+            <!--<input type="submit" name="提交" onclick="return CheckValid();" />-->
+            <button type="submit" name="提交" id="qwe">发送</button>
+        </form>
+        <div class="item">
+{#            <h5>id:{{ id }}</h5>#}
+{#            <h5>u_nickname:{{ u_nickname }}</h5>#}
+{#            <h5>u_mobile:{{ u_mobile }}</h5>#}
+{#            <h5>u_email:{{ u_email }}</h5>#}
+{#            <h5>id:{{ u_password }}</h5>#}
+{#            <h5>region_id:{{ region_id }}</h5>#}
+{#            <h5>u_studio:{{ u_studio }}</h5>#}
+{#            <h5>u_create_time:{{ u_create_time }}</h5>#}
+{#            <h5>u_update_time:{{ u_update_time }}</h5>#}
+        </div>
+    </div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script>
+        $('#q1').addClass("test");
+    </script>
+
+
+
+    <script>
+
+        $(function () {
+            // 只要页面框架加载完成自动执行此函数
+            Binkfunction();
+
+        });
+
+        function Binkfunction() {
+
+            $('form button[id="qwe"]').click(function () {
+                //  一点击submit执行此函数内容
+
+                var flag = true;
+
+                $('form .item span').remove();
+
+
+                $('form input').each(function () {
+                    // 每一个元素执行此匿名函数
+                    // this
+
+                    console.log(this);
+                    var val = $(this).val();
+                    console.log('检测是否有值：',val.length);
+                    if (val.length<=0){
+
+                        var label = $(this).attr('label');
+                        //var tag = document.createElement("span");
+                        //tag.innerText = label + "不能为空";
+                        console.log(label);
+                        alert(label + "不能为空");
+                        //$(this).after(tag);
+                        flag = false;
+                    }
+
+                });
+                return flag;
+
+            });
+
+
+        }
+
+
+
+
+        function CheckValid() {
+            // 找到form标签下所有需要验证的标签
+            // $('form.c1')
+            // $('form input[type="text"],input[type="password"]')
+            // 循环所有需要验证的标签，获取内容
+
+            $('form .item span').remove();
+
+            var flag = true;
+
+            $('form .c1').each(function () {
+                // 每一个元素执行此匿名函数
+                // this
+                console.log(this);
+                var val=$(this).val();
+                if (val.length<=0) {
+                    var label = $(this).attr('label');
+                    var tag = document.createElement("span");
+                    tag.innerText = label + "不能为空";
+                    $(this).after(tag);
+                    flag = false;
+                };
+            });
+            return flag;
+
+        }
+    </script>
+
+
+</body>
+
+
+</html>
