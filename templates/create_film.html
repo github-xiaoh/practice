@@ -155,35 +155,6 @@
             });
 
 
-            $('form button[id="send2"]').click(function () {
-                //  一点击submit执行此函数内容
-
-                var flag = true;
-
-                $('form .fbneirong span').remove();
-
-
-                $('.fbneirong form input[inputk="account"]').each(function () {
-                    // 每一个元素执行此匿名函数
-                    // this
-
-                    console.log(this);
-                    var val = $(this).val();
-                    console.log('检测是否有值：',val.length);
-                    if (val.length<=0){
-
-                        var label = $(this).attr('lable');
-                        console.log(label);
-                        alert(label + "不能为空");
-                        flag = false;
-                    }
-
-                });
-                return flag;
-
-            });
-
-
         }
     </script>
 

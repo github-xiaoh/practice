@@ -637,7 +637,7 @@ def goodsAddsku(filmId,spuName,spuId,goodsPositive,startTime,endTime,regionId):
     resultJ = json.loads(result.content)
     return resultJ
 
-def goodsUpdateSku(spuId,filmId,spuName,skuId,goodsPositive,startTime,endTime):
+def goodsUpdateSku(spuId,filmId,spuName,skuId,goodsPositive,spuStartTime,spuEndTime):
     url = "http://goods-manage-test.smartcinemausa.com/goods/goodsUpdate"
     headers = {
         'Content-Type': 'application/json',
@@ -671,12 +671,12 @@ def goodsUpdateSku(spuId,filmId,spuName,skuId,goodsPositive,startTime,endTime):
             "servicePrice": 10,
             "iosServicePrice": 10,
             "activityPrice": 0,
-            "onlineStartTime": startTime,
-            "onlineEndTime": endTime,
-            "releaseStartTime": startTime,
-            "releaseEndTime": endTime,
-            "spuStartTime": startTime,
-            "spuEndTime": endTime,
+            "onlineStartTime": spuStartTime,
+            "onlineEndTime": spuEndTime,
+            "releaseStartTime": spuStartTime,
+            "releaseEndTime": spuEndTime,
+            "spuStartTime": spuStartTime,
+            "spuEndTime": spuEndTime,
             "ysSellStartTime": 0,
             "ysSellEndTime": 0,
             "zcSellStartTime": 0,
@@ -831,10 +831,410 @@ def cmsFilmRelease(filmId,regionId):
     return resultJ
 
 
+def getGuestData(regionId):
+    url = "http://ucenter-manage-test.smartcinemausa.com/ucenter/getGuestData"
+    headers = {
+        'Content-Type': 'application/json',
+        'X-Region-Id': str(regionId),
+    }
+    body = {}
+
+    result = requests.get(url=url, headers=headers, params=body)
+    resultJ = json.loads(result.content)
+    return resultJ
 
 
-filmName = "北美测试全10分钟"
+def getPreProSpuList(regionId):
+    """
+    :param regionId:
+    :return:
+    """
+    url = "http://goods-manage-test.smartcinemausa.com/spu/getPreProSpuList"
+    headers = {
+        'Content-Type': 'application/json',
+        'X-Region-Id': str(regionId),
+    }
+    body = json.dumps({
+        "filmName": "",
+        "type": 1
+    })
+
+    result = requests.post(url=url, headers=headers, data=body)
+    resultJ = json.loads(result.content)
+    return resultJ
+
+def editRoom(specialName,filmName,spuReleaseEndtime,spuReleaseStartTime,spuId,filmId,userName,userId,regionId,startTime):
+    """
+    :param specialName:
+    :param filmName:
+    :param spuReleaseEndtime:
+    :param spuReleaseStartTime:
+    :param spuId:
+    :param filmId:
+    :param userName:
+    :param userId:
+    :param regionId:
+    :param startTime:
+    :return:
+    """
+    url = "http://activity-manage-test.smartcinemausa.com/inner/activity/editRoom"
+    headers = {
+        'Content-Type': 'application/json',
+        'X-Region-Id': str(regionId),
+    }
+    body = json.dumps(
+        {
+            "international": {
+                "ko_KR": {
+                    "name": "测试-" + specialName,
+                    "warmVoiceRecord": "",
+                    "backPictureUrl": "https://g.smartcinemausa.com/images/f27d83b8088042fbaffc3141950989d4-700-466.jpg",
+                    "activityImgUrl": "https://g.smartcinemausa.com/images/cdf8e8668a3841088f1e4f9ee669bfff-700-466.jpg",
+                    "remark": "한글 은 테스트 에 사용 되 는 데 이 터 를 장의 별로 의미 있 는 표현 이 아니다.",
+                    "filmName": "한국어" + filmName,
+                    "spuReleaseEndtime": spuReleaseEndtime,
+                    "spuReleaseStartTime": spuReleaseStartTime,
+                    "spuId": spuId,
+                    "filmId": filmId,
+                    "userName": userName,
+                    "userRemark": userName,
+                    "userImage": "",
+                    "userId": userId,
+                    "drawerList": []
+                },
+                "zh_TW": {
+                    "name": "测试-" + specialName,
+                    "warmVoiceRecord": "",
+                    "backPictureUrl": "https://g.smartcinemausa.com/images/f27d83b8088042fbaffc3141950989d4-700-466.jpg",
+                    "activityImgUrl": "https://g.smartcinemausa.com/images/cdf8e8668a3841088f1e4f9ee669bfff-700-466.jpg",
+                    "remark": "繁体场次描述用来测试的数据，不是很有意义的一段语言描述繁体繁体.",
+                    "filmName": "繁体" + filmName,
+                    "spuReleaseEndtime": spuReleaseEndtime,
+                    "spuReleaseStartTime": spuReleaseStartTime,
+                    "spuId": spuId,
+                    "filmId": filmId,
+                    "userName": userName,
+                    "userRemark": userName,
+                    "userImage": "",
+                    "userId": userId,
+                    "drawerList": []
+                },
+                "zh_CN": {
+                    "name": "测试-" + specialName,
+                    "warmVoiceRecord": "",
+                    "backPictureUrl": "https://g.smartcinemausa.com/images/f27d83b8088042fbaffc3141950989d4-700-466.jpg",
+                    "activityImgUrl": "https://g.smartcinemausa.com/images/cdf8e8668a3841088f1e4f9ee669bfff-700-466.jpg",
+                    "remark": "简体场次描述用来测试的数据，不是很有意义的一段语言描述",
+                    "filmName": filmName,
+                    "spuReleaseEndtime": spuReleaseEndtime,
+                    "spuReleaseStartTime": spuReleaseStartTime,
+                    "spuId": spuId,
+                    "filmId": filmId,
+                    "userName": userName,
+                    "userRemark": userName,
+                    "userImage": "",
+                    "userId": userId,
+                    "drawerList": []
+                },
+                "en_US": {
+                    "name": "测试-" + specialName,
+                    "warmVoiceRecord": "",
+                    "backPictureUrl": "https://g.smartcinemausa.com/images/f27d83b8088042fbaffc3141950989d4-700-466.jpg",
+                    "activityImgUrl": "https://g.smartcinemausa.com/images/cdf8e8668a3841088f1e4f9ee669bfff-700-466.jpg",
+                    "remark": "Korean session description is used to test the data, not a very meaningful language description",
+                    "filmName": "testSource" + filmName,
+                    "spuReleaseEndtime": spuReleaseEndtime,
+                    "spuReleaseStartTime": spuReleaseStartTime,
+                    "spuId": spuId,
+                    "filmId": filmId,
+                    "userName": userName,
+                    "userRemark": userName,
+                    "userImage": "",
+                    "userId": userId,
+                    "drawerList": []
+                }
+            },
+            "spuId": spuId,
+            "userNum": 80,
+            "userId": userId,
+            "beignTime": startTime,
+            "playType": 0,
+            "showOwnerPhoto": True,
+            "filmId": filmId,
+            "type": 1,
+            "roomId": 0
+        }
+    )
+
+    result = requests.post(url=url,headers=headers,data=body)
+    resultJ = json.loads(result.content)
+    return resultJ
+
+def editDrawerInfo(roomId,userName,filmName,regionId):
+    """
+    :param roomId:
+    :param userName:
+    :param filmName:
+    :param regionId:
+    :return:
+    """
+    url = "http://activity-manage-test.smartcinemausa.com/inner/activity/editDrawerInfo"
+    headers = {
+        'Content-Type': 'application/json',
+        'X-Region-Id': str(regionId),
+    }
+    body = json.dumps(
+        {
+            "roomId": roomId,
+            "international": {
+                "ko_KR": {
+                    "drawerList": [{
+                        "type": 1,
+                        "show": 1,
+                        "title": "전용관",
+                        "userName": userName,
+                        "userImage": "",
+                        "userRemark": userName
+                    }, {
+                        "type": 2,
+                        "show": 1,
+                        "title": "영화",
+                        "filmName": filmName,
+                        "filmType": "코믹/다큐멘터리/로맨스",
+                        "filmImg": "",
+                        "descInfo": "根据2018年5月14日四川航空3U8633航班机组成功处置特情真实事件改编。机组执行航班任务时，在万米高空突遇驾驶舱风挡玻璃爆裂脱落、座舱释压的极端罕见险情，生死关头，他们临危不乱、果断应对、正确处置，确保了机上全部人员的生命安全，创造了世界民航史上的奇迹。",
+                        "subTitle": "",
+                        "content": ""
+                    }, {
+                        "type": 3,
+                        "show": 1,
+                        "title": "주 제목 사용자 정의",
+                        "subTitle": "사용자 정의 눈 에 띄 는 내용",
+                        "content": "사용자 정의 내용 을 사용 하여 H5 전단 전시 에 사용 합 니 다."
+                    }]
+                },
+                "en_US": {
+                    "drawerList": [{
+                        "type": 1,
+                        "show": 1,
+                        "title": "Host introduction",
+                        "userName": userName,
+                        "userImage": "",
+                        "userRemark": userName
+                    }, {
+                        "type": 2,
+                        "show": 1,
+                        "title": "Movie information",
+                        "filmName": filmName,
+                        "filmType": "Comedy/Documentary/Romance",
+                        "filmImg": "https://g.smartcinemausa.com/images/a9f172f04f4c4cdf82e4127e637f40e6-1057-1511.jpg",
+                        "descInfo": "根据2018年5月14日四川航空3U8633航班机组成功处置特情真实事件改编。机组执行航班任务时，在万米高空突遇驾驶舱风挡玻璃爆裂脱落、座舱释压的极端罕见险情，生死关头，他们临危不乱、果断应对、正确处置，确保了机上全部人员的生命安全，创造了世界民航史上的奇迹。",
+                        "subTitle": "",
+                        "content": ""
+                    }, {
+                        "type": 3,
+                        "show": 1,
+                        "title": "Custom main title",
+                        "content": "Custom content for H5 front display",
+                        "subTitle": "Customize eye-catching content"
+                    }]
+                },
+                "zh_CN": {
+                    "drawerList": [{
+                        "type": 1,
+                        "show": 1,
+                        "title": "场主介绍",
+                        "userName": userName,
+                        "userImage": "",
+                        "userRemark": userName
+                    }, {
+                        "type": 2,
+                        "show": 1,
+                        "title": "影片介绍",
+                        "filmName": filmName,
+                        "filmType": "喜剧/纪录片/爱情",
+                        "filmImg": "https://g.smartcinemausa.com/images/a9f172f04f4c4cdf82e4127e637f40e6-1057-1511.jpg",
+                        "descInfo": "根据2018年5月14日四川航空3U8633航班机组成功处置特情真实事件改编。机组执行航班任务时，在万米高空突遇驾驶舱风挡玻璃爆裂脱落、座舱释压的极端罕见险情，生死关头，他们临危不乱、果断应对、正确处置，确保了机上全部人员的生命安全，创造了世界民航史上的奇迹。",
+                        "subTitle": "",
+                        "content": ""
+                    }, {
+                        "type": 3,
+                        "show": 1,
+                        "title": "自定义主标题",
+                        "subTitle": "自定义醒目内容",
+                        "content": "自定义内容，用来H5前段展示使用"
+                    }]
+                }
+            }
+        }
+    )
+
+    result = requests.post(url=url, headers=headers,data=body)
+    resultJ = json.loads(result.content)
+    return resultJ
+
+
+
+def getRoomData(filmId,regionId):
+    """
+    :param filmId:
+    :param regionId:
+    :return:
+    """
+    url = "http://activity-manage-test.smartcinemausa.com/inner/activity/getRoomData"
+    headers = {
+        'X-Region-Id': str(regionId),
+    }
+    body = {
+        "size": 20,
+        "page": 1,
+        'status': 0,
+        'filmId': filmId,
+        'filmName':'',
+        'type':1,
+        'begin': "",
+        'end': "",
+        'userName': "",
+        'onlineStatus':0,
+    }
+
+    result = requests.get(url=url,headers=headers,params=body)
+    resultJ = json.loads(result.content)
+    return resultJ
+
+
+def updateStatus(roomId,regionId):
+    """
+    :param roomId:
+    :param regionId:
+    :return:
+    """
+    url = "http://activity-manage-test.smartcinemausa.com/inner/activity/updateStatus"
+    headers = {
+        'Content-Type': 'application/json',
+        'X-Region-Id': str(regionId),
+    }
+    body = json.dumps(
+        {
+            "roomId": roomId,
+            "onlineStatus": 1
+        }
+    )
+
+    result = requests.post(url=url,headers=headers,data=body)
+    resultJ = json.loads(result.content)
+    return resultJ
+
+filmTime = getTimes()
+startTime = filmTime[2]
+
+print(startTime)
+
+
+# star_info_result = getGuestData(3)
+# spu_list_result = getPreProSpuList(3)
+# print(star_info_result)
+# print(spu_list_result)
+#
+#
+# star_info = []
+# spu_list = []
+#
+# i=0
+# for star in star_info_result['data']:
+#     if star['userId'] == 532:
+#         print("判断成功")
+#         break
+#     print(star['nickname'])
+#     print(star['userId'])
+#     star_info.append(star['nickname'])
+#     print("==============信息提取%s================="%(str(i)))
+#
+#
+# print("=========================信息分割==========================")
+# for spu in spu_list_result['data']:
+#     # print("한국어"+spu['filmName'])
+#     # print(spu['spuReleaseEndtime'])
+#     # print(spu['spuReleaseStartTime'])
+#     # print(spu['spuId'])
+#     # print(spu['filmId'])
+#
+#     spu_list.append(spu['filmName'])
+#     print("==============信息提取%s=================" % (str(i)))
+#
+# context = {'star_info':star_info_result['data'],'spu_list':spu_list_result['data']}
+#
+# print(context)
+
+
+
+filmName = "한국어测试影片影迷"
 regionId = '3'
+specialName = "专场名称定制004"
+spuReleaseEndtime = 1596211199
+spuReleaseStartTime = 1590940800
+spuId = "UFrLVfOc3t0BPZe"
+filmId = 4932917517541910
+userName = "开飞机的熟客了"
+userId = 532
+
+# # 编辑场信息
+#
+# room_info = editRoom(specialName,filmName,spuReleaseEndtime,spuReleaseStartTime,spuId,filmId,userName,userId,regionId,startTime)
+# print("专场信息：",room_info)
+#
+# roomId = room_info['data']['id']
+#
+# print("编辑场信息:：",editDrawerInfo(roomId,userName,filmName,regionId))
+#
+# # 获取专场列表信息，用于寻找skuId
+# special_list = getRoomData(filmId,regionId)
+# print("专场列表信息",special_list)
+#
+# special_info = special_list['data']['list']
+# print("单个专场信息：",special_info)
+#
+# for room_id in special_info:
+#     print("房间信息结果：",room_id)
+#     if room_id['roomId'] == roomId:
+#         sku_id = room_id['skuId']
+#         film_id = room_id['filmId']
+#         break
+#     else:
+#         continue
+#
+# print(sku_id,film_id)
+#
+# # 配置上线"预发"环境
+# print('配置上线"预发"环境：',goodsEditSkuEnvironment(sku_id,regionId))
+#
+# # 审核通过
+# print('审核通过：',goodsEditSkuExamine(sku_id,regionId))
+#
+# # 配置上线"线上"环境
+# print('配置上线"线上"环境：',goodsEditSkuEnvironment(sku_id,regionId))
+#
+# # 配置绑定渠道
+# print('配置绑定渠道：',goodsEditSkuChannel(sku_id,regionId))
+#
+# # 配置上架商品
+# print('配置上架商品：',goodsEditSkuGoodsStatus(film_id,sku_id,regionId))
+#
+# # 查找正片信息ID
+# print("正片信息查询：",goodsGetpositive(filmId,regionId)['data'][0])
+# goodsPositive = goodsGetpositive(filmId,regionId)['data'][0]['positive'][0]['value']
+# print("查找影片正片ID：",goodsPositive)
+#
+# print('修改商品价格：',goodsUpdateSku(spuId,filmId,filmName,sku_id,goodsPositive,spuReleaseStartTime,spuReleaseEndtime))
+#
+# # 配置专场上线
+# print('配置专场上线：',updateStatus(roomId,regionId))
+
+
+
+
+
+
 
 
 # filmTime = getTimes()
@@ -856,10 +1256,10 @@ regionId = '3'
 # print("为影片添加视频信息：",mediaAddvideo(filmId,regionId))
 # print("查找影片正片ID(废弃)：",mediaGetPostiticeTitle(filmId,filmName,regionId))
 #
-# print(goodsGetpositive(filmId,regionId)['data'][0])
+# print("正片信息查询：",goodsGetpositive(filmId,regionId)['data'][0])
 # goodsPositive = goodsGetpositive(filmId,regionId)['data'][0]['positive'][0]['value']
-# spuId = goodsGetpositive(filmId,regionId)['data'][0]['spuId']
 # print("查找影片正片ID：",goodsPositive)
+# spuId = goodsGetpositive(filmId,regionId)['data'][0]['spuId']
 # print("查找影片SpuID",spuId)
 #
 # print("编辑商品信息：",goodsEditProduct(spuId,filmName,startTime,endTime,regionId))

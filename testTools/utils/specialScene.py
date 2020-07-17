@@ -275,63 +275,63 @@ def updateStatus(roomId,regionId):
 
 
 
-special_name = "测试专场-韩国LI冬—05"
-regionId = '3'
-spuId = "RXSiDR7t5JOVvjF"
-filmId =  "4932917517541910"
-spuName = "北美测试全10分钟"
+# special_name = "测试专场-韩国-CH0"
+# regionId = '3'
+# spuId = "RXSiDR7t5JOVvjF"
+# filmId =  "4932917517541910"
+# spuName = "北美测试全10分钟"
 
 
-filmTime = getTimes()
-startTime = filmTime[2]
-
-print(startTime)
-
-# 获取专场信息筛选roomId
-room_info = editRoom(special_name,regionId,startTime)
-print("专场信息：",room_info)
-
-roomId = room_info['data']['id']
-
-# 获取专场信息，编辑专场传递信息
-print("获取专场信息：",getDrawerInfo(roomId,regionId))
-print("编辑场信息:：",editDrawerInfo(roomId,regionId))
-
-# 获取专场列表信息，用于寻找skuId
-special_list = getRoomData(regionId)
-print("专场列表信息",special_list)
-
-special_info = special_list['data']['list']
-print("单个专场信息：",special_info)
-
-for room_id in special_info:
-    print("房间信息结果：",room_id)
-    if room_id['roomId'] == roomId:
-        sku_id = room_id['skuId']
-        film_id = room_id['filmId']
-        break
-    else:
-        continue
-
-print(sku_id,film_id)
-
-
-# 配置上线"预发"环境
-print('配置上线"预发"环境：',goodsEditSkuEnvironment(sku_id,regionId))
-
-# 审核通过
-print('审核通过：',goodsEditSkuExamine(sku_id,regionId))
-
-# 配置上线"线上"环境
-print('配置上线"线上"环境：',goodsEditSkuEnvironment(sku_id,regionId))
-
-# 配置绑定渠道
-print('配置绑定渠道：',goodsEditSkuChannel(sku_id,regionId))
-
-# 配置上架商品
-print('配置上架商品：',goodsEditSkuGoodsStatus(film_id,sku_id,regionId))
-
-print('修改商品价格：',goodsUpdateSku(spuId,filmId,spuName,sku_id,"4932956157102918",1591843477,1659235477))
-
-# 配置专场上线
-print('配置专场上线：',updateStatus(roomId,regionId))
+# filmTime = getTimes()
+# startTime = filmTime[2]
+#
+# print(startTime)
+#
+# # 获取专场信息筛选roomId
+# room_info = editRoom(special_name,regionId,startTime)
+# print("专场信息：",room_info)
+#
+# roomId = room_info['data']['id']
+#
+# # 获取专场信息，编辑专场传递信息
+# print("获取专场信息：",getDrawerInfo(roomId,regionId))
+# print("编辑场信息:：",editDrawerInfo(roomId,regionId))
+#
+# # 获取专场列表信息，用于寻找skuId
+# special_list = getRoomData(regionId)
+# print("专场列表信息",special_list)
+#
+# special_info = special_list['data']['list']
+# print("单个专场信息：",special_info)
+#
+# for room_id in special_info:
+#     print("房间信息结果：",room_id)
+#     if room_id['roomId'] == roomId:
+#         sku_id = room_id['skuId']
+#         film_id = room_id['filmId']
+#         break
+#     else:
+#         continue
+#
+# print(sku_id,film_id)
+#
+#
+# # 配置上线"预发"环境
+# print('配置上线"预发"环境：',goodsEditSkuEnvironment(sku_id,regionId))
+#
+# # 审核通过
+# print('审核通过：',goodsEditSkuExamine(sku_id,regionId))
+#
+# # 配置上线"线上"环境
+# print('配置上线"线上"环境：',goodsEditSkuEnvironment(sku_id,regionId))
+#
+# # 配置绑定渠道
+# print('配置绑定渠道：',goodsEditSkuChannel(sku_id,regionId))
+#
+# # 配置上架商品
+# print('配置上架商品：',goodsEditSkuGoodsStatus(film_id,sku_id,regionId))
+#
+# print('修改商品价格：',goodsUpdateSku(spuId,filmId,spuName,sku_id,"4932956157102918",1591843477,1659235477))
+#
+# # 配置专场上线
+# print('配置专场上线：',updateStatus(roomId,regionId))

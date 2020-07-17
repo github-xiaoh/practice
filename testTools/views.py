@@ -14,7 +14,8 @@ from django.utils.safestring import mark_safe
 from ApiManager.views import login_check
 from .utils.releasefilm import mediaGetfilmList, mediaSendFilm, mediaAddphoto, mediaAddvideo, mediaGetPostiticeTitle, \
     goodsGetpositive, goodsAddspu, goodsAddsku, goodsGetSku, goodsEditSkuChannel, goodsEditSkuEnvironment, \
-    goodsEditSkuExamine, goodsEditSkuGoodsStatus, cmsFilmRelease, getTimes, mediaAddsource, goodsEditProduct
+    goodsEditSkuExamine, goodsEditSkuGoodsStatus, cmsFilmRelease, getTimes, mediaAddsource, goodsEditProduct, \
+    getGuestData, getPreProSpuList, getRoomData, editRoom, editDrawerInfo, goodsUpdateSku, updateStatus
 from .utils.fileOperation import openFile, newFile
 from .utils.common import Page
 
@@ -222,11 +223,127 @@ def createfilm(request):
 @login_check
 def special_scene(request):
 
-    if request.GET.get is None:
-        return render(request,'special_scene.html')
+    if request.method == "GET":
+        star_info_result = getGuestData(3)
+        spu_list_result = getPreProSpuList(3)
+
+        context = {'star_info': star_info_result['data'],'spu_list': spu_list_result['data'],"config_statis":"开始配置专场"}
+        # print(context)
+        # context = {"star_info": "2", "spu_list": 3}
+
+        return render(request,'special_scene.html',context)
 
     else:
-        return render(request,'special_scene.html')
+
+        userId = request.POST.get("star_user")
+        filmId = request.POST.get("filmName")
+        specialName = request.POST.get("special_name")
+        print("请求数据：", request.POST)
+        print("star场主：",userId)
+        print("影片名称：",filmId)
+
+        regionId = '3'
+
+        star_info_result = getGuestData(regionId)
+        spu_list_result = getPreProSpuList(regionId)
+        print("场主用户列表：",star_info_result)
+        print("影片信息列表：",spu_list_result)
+
+
+        for star in star_info_result['data']:
+            print("====================分割线====================")
+
+
+
+            if star['userId'] == int(userId):
+                print("判断成功，获取用户信息")
+                userName = star['nickname']
+                for spu in spu_list_result['data']:
+                    print("====================进入影片呢循环====================")
+                    if spu['filmId']== int(filmId):
+                        # print(type(spu['filmId']),type(filmId))
+                        print("判断成功，获取影片信息")
+                        filmName = "한국어" + spu['filmName']
+                        spuId = spu['spuId']
+                        spuReleaseEndtime = spu['spuReleaseEndtime']
+                        spuReleaseStartTime = spu['spuReleaseStartTime']
+
+                        # 编辑场信息
+
+                        room_info = editRoom(specialName, filmName, spuReleaseEndtime, spuReleaseStartTime, spuId,
+                                             filmId, userName, userId, regionId, int(round((time.time())) * 1000))
+                        print("专场信息：", room_info)
+
+                        roomId = room_info['data']['id']
+
+                        print("编辑场信息:：", editDrawerInfo(roomId, userName, filmName, regionId))
+
+                        # 获取专场列表信息，用于寻找skuId
+                        special_list = getRoomData(filmId, regionId)
+                        print("专场列表信息", special_list)
+
+                        special_info = special_list['data']['list']
+                        print("单个专场信息：", special_info)
+
+                        for room_id in special_info:
+                            print("房间信息结果：", room_id)
+                            if room_id['roomId'] == roomId:
+                                sku_id = room_id['skuId']
+                                film_id = room_id['filmId']
+                                break
+                            else:
+                                continue
+
+                        print(sku_id, film_id)
+
+                        # 配置上线"预发"环境
+                        print('配置上线"预发"环境：', goodsEditSkuEnvironment(sku_id, regionId))
+
+                        # 审核通过
+                        print('审核通过：', goodsEditSkuExamine(sku_id, regionId))
+
+                        # 配置上线"线上"环境
+                        print('配置上线"线上"环境：', goodsEditSkuEnvironment(sku_id, regionId))
+
+                        # 配置绑定渠道
+                        print('配置绑定渠道：', goodsEditSkuChannel(sku_id, regionId))
+
+                        # 配置上架商品
+                        print('配置上架商品：', goodsEditSkuGoodsStatus(film_id, sku_id, regionId))
+
+                        # 查找正片信息ID
+                        print("正片信息查询：", goodsGetpositive(filmId, regionId)['data'][0])
+                        goodsPositive = goodsGetpositive(filmId, regionId)['data'][0]['positive'][0]['value']
+                        print("查找影片正片ID：", goodsPositive)
+
+                        print('修改商品价格：',
+                              goodsUpdateSku(spuId, filmId, filmName, sku_id, goodsPositive, spuReleaseStartTime,
+                                             spuReleaseEndtime))
+
+                        # 配置专场上线
+                        print('配置专场上线：', updateStatus(roomId, regionId))
+
+                        # print("跳出循环")
+                        config_status = "配置成功"
+                        break
+                    else:
+                        # print("判断失败，跳出本次循环")
+                        config_status = "配置失败"
+                        continue
+                # print("用户循环执行完毕")
+                break
+            else:
+                # print(star['userId'],userId)
+                # print(type(star['userId']), type(userId))
+                # print("判断失败，跳出本次循环")
+                config_status = "配置失败"
+                continue
+
+        context = {"config_statis":config_status}
+        return render(request, 'special_scene.html',context)
+
+
+
 
 
 
