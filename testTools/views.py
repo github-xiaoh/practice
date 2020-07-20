@@ -234,11 +234,10 @@ def special_scene(request):
         return render(request,'special_scene.html',context)
 
     else:
-
         userId = request.POST.get("star_user")
         filmId = request.POST.get("filmName")
         specialName = request.POST.get("special_name")
-        logger.info("请求数据：", request.POST)
+        logger.info("请求数据：{0}".format(request.POST))
 
         regionId = '3'
 
@@ -247,26 +246,28 @@ def special_scene(request):
         logger.info("场主用户列表：{star_info_result}".format(star_info_result=star_info_result))
         logger.info("影片信息列表：{spu_list_result}".format(spu_list_result=spu_list_result))
 
-
         for star in star_info_result['data']:
-            if star['userId'] == int(userId):
+            if star['userId'] != int(userId):
+                request.session['msg'] = "没有匹配到userId"
+            elif star['userId'] == int(userId):
                 userName = star['nickname']
                 for spu in spu_list_result['data']:
                     logger.info("====================进入影片呢循环====================")
-                    if spu['filmId']== int(filmId):
+                    if spu['filmId'] != int(filmId):
+                        request.session['msg'] = "没有匹配到filmId"
+                    elif spu['filmId']== int(filmId):
                         filmName = "한국어" + spu['filmName']
                         spuId = spu['spuId']
                         spuReleaseEndtime = spu['spuReleaseEndtime']
                         spuReleaseStartTime = spu['spuReleaseStartTime']
 
                         # 编辑场信息
-
                         room_info = editRoom(specialName, filmName, spuReleaseEndtime, spuReleaseStartTime, spuId,
                                              filmId, userName, userId, regionId, int(round((time.time())) * 1000))
                         logger.info("专场信息：{room_info}".format(room_info=room_info))
 
+                        # 获取场次ID
                         roomId = room_info['data']['id']
-
                         logger.info("编辑场信息：{0}".format(editDrawerInfo(roomId, userName, filmName, regionId)))
 
                         # 获取专场列表信息，用于寻找skuId
@@ -278,7 +279,9 @@ def special_scene(request):
 
                         for room_id in special_info:
                             # print("房间信息结果：", room_id)
-                            if room_id['roomId'] == roomId:
+                            if room_id['roomId'] != roomId:
+                                request.session['msg'] = "没有匹配到roomId"
+                            elif room_id['roomId'] == roomId:
                                 sku_id = room_id['skuId']
                                 film_id = room_id['filmId']
 
@@ -307,24 +310,13 @@ def special_scene(request):
                                 logger.info('修改商品价格：{0}'.format(
                                     goodsUpdateSku(spuId, filmId, filmName, sku_id, goodsPositive, spuReleaseStartTime,
                                                    spuReleaseEndtime)))
-
                                 # 配置专场上线
                                 logger.info('配置专场上线：{0}'.format(updateStatus(roomId, regionId)))
                                 request.session['msg'] = "配置成功"
                                 break
-                            else:
-                                request.session['msg'] = "没有匹配到roomId"
-                                continue
                         break
-                    else:
-                        request.session['msg'] = "没有匹配到filmId"
-                        continue
-            else:
-                # print(star['userId'],userId)
-                # print(type(star['userId']), type(userId))
-                # print("判断失败，跳出本次循环")
-                request.session['msg'] = "没有匹配到userId"
-                continue
+                break
+
         return redirect('/real_time_log/')
 
 
