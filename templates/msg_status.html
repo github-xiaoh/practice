@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}执行状态页面{% endblock %}
+{% load staticfiles %}
+
+
+{% block content %}
+<body>
+
+    <div class="admin-biaogelist">
+
+        <div class="listbiaoti am-cf">
+            <ul class="am-icon-flag on"> 执行状态页面</ul>
+            <dl class="am-icon-home" style="float: right;"> 当前位置： 执行状态 > <a href="#">状态查看</a></dl>
+        </div>
+
+        <div style="margin: 10px 6px 0px 16px;width: 600px">
+                <h3 id = "config_status">执行结果查看:>>{{ request.session.msg }}</h3>
+        </div>
+
+        <div class="fbneirong">
+
+
+            <form class="form-horizontal" id="select_username" method="get" action='/special_scene/'>
+                <div class="am-form-group am-cf">
+                    <div class="you" style="margin-left: 8%;">
+                        <button type="submit" class="am-btn am-btn-success am-radius" id="send1">点击跳转回专场创建页面</button>
+                            <!--   onclick="info_ajax('#add_project', '/api/add_project/')" -->
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+
+</body>
+
+
+{% endblock %}

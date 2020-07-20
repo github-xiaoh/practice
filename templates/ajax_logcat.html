@@ -13,7 +13,7 @@
         </div>
 
         <div style="margin: 10px 6px 0px 16px;width: 600px">
-            <h3>执行结果查看:>>{{ toast }}</h3>
+            <h3>执行结果查看:>>{{ request.session.msg }},{{ toast }}</h3>
         </div>
         <div class="fbneirong">
 
@@ -92,7 +92,7 @@
 
 <script>
     $(document).ready(function(){
-        alert("tanchuan");
+        alert({{ log_file }});
 
       // 求和 a + b
 

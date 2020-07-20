@@ -1,7 +1,7 @@
 import logging
 import time
 
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.forms.models import model_to_dict
 from dwebsocket import accept_websocket
@@ -238,31 +238,22 @@ def special_scene(request):
         userId = request.POST.get("star_user")
         filmId = request.POST.get("filmName")
         specialName = request.POST.get("special_name")
-        print("请求数据：", request.POST)
-        print("star场主：",userId)
-        print("影片名称：",filmId)
+        logger.info("请求数据：", request.POST)
 
         regionId = '3'
 
         star_info_result = getGuestData(regionId)
         spu_list_result = getPreProSpuList(regionId)
-        print("场主用户列表：",star_info_result)
-        print("影片信息列表：",spu_list_result)
+        logger.info("场主用户列表：{star_info_result}".format(star_info_result=star_info_result))
+        logger.info("影片信息列表：{spu_list_result}".format(spu_list_result=spu_list_result))
 
 
         for star in star_info_result['data']:
-            print("====================分割线====================")
-
-
-
             if star['userId'] == int(userId):
-                print("判断成功，获取用户信息")
                 userName = star['nickname']
                 for spu in spu_list_result['data']:
-                    print("====================进入影片呢循环====================")
+                    logger.info("====================进入影片呢循环====================")
                     if spu['filmId']== int(filmId):
-                        # print(type(spu['filmId']),type(filmId))
-                        print("判断成功，获取影片信息")
                         filmName = "한국어" + spu['filmName']
                         spuId = spu['spuId']
                         spuReleaseEndtime = spu['spuReleaseEndtime']
@@ -272,93 +263,77 @@ def special_scene(request):
 
                         room_info = editRoom(specialName, filmName, spuReleaseEndtime, spuReleaseStartTime, spuId,
                                              filmId, userName, userId, regionId, int(round((time.time())) * 1000))
-                        print("专场信息：", room_info)
+                        logger.info("专场信息：{room_info}".format(room_info=room_info))
 
                         roomId = room_info['data']['id']
 
-                        print("编辑场信息:：", editDrawerInfo(roomId, userName, filmName, regionId))
+                        logger.info("编辑场信息：{0}".format(editDrawerInfo(roomId, userName, filmName, regionId)))
 
                         # 获取专场列表信息，用于寻找skuId
                         special_list = getRoomData(filmId, regionId)
-                        print("专场列表信息", special_list)
+                        logger.info("专场列表信息：{special_list}".format(special_list=special_list))
 
                         special_info = special_list['data']['list']
-                        print("单个专场信息：", special_info)
+                        logger.info("单个专场信息：{special_info}".format(special_info=special_info))
 
                         for room_id in special_info:
-                            print("房间信息结果：", room_id)
+                            # print("房间信息结果：", room_id)
                             if room_id['roomId'] == roomId:
                                 sku_id = room_id['skuId']
                                 film_id = room_id['filmId']
+
+                                # print(sku_id, film_id)
+
+                                # 配置上线"预发"环境
+                                logger.info('配置上线"预发"环境：{0}'.format(goodsEditSkuEnvironment(sku_id, regionId)))
+
+                                # 审核通过
+                                logger.info('审核通过：{0}'.format(goodsEditSkuExamine(sku_id, regionId)))
+
+                                # 配置上线"线上"环境
+                                logger.info('配置上线"线上"环境：{0}'.format(goodsEditSkuEnvironment(sku_id, regionId)))
+
+                                # 配置绑定渠道
+                                logger.info('配置绑定渠道：{0}'.format(goodsEditSkuChannel(sku_id, regionId)))
+
+                                # 配置上架商品
+                                logger.info('配置上架商品：{0}'.format(goodsEditSkuGoodsStatus(film_id, sku_id, regionId)))
+
+                                # 查找正片信息ID
+                                logger.info("正片信息查询：{0}".format(goodsGetpositive(filmId, regionId)['data'][0]))
+                                goodsPositive = goodsGetpositive(filmId, regionId)['data'][0]['positive'][0]['value']
+                                logger.info("查找影片正片ID：{goodsPositive}".format(goodsPositive=goodsPositive))
+
+                                logger.info('修改商品价格：{0}'.format(
+                                    goodsUpdateSku(spuId, filmId, filmName, sku_id, goodsPositive, spuReleaseStartTime,
+                                                   spuReleaseEndtime)))
+
+                                # 配置专场上线
+                                logger.info('配置专场上线：{0}'.format(updateStatus(roomId, regionId)))
+                                request.session['msg'] = "配置成功"
                                 break
                             else:
+                                request.session['msg'] = "没有匹配到roomId"
                                 continue
-
-                        print(sku_id, film_id)
-
-                        # 配置上线"预发"环境
-                        print('配置上线"预发"环境：', goodsEditSkuEnvironment(sku_id, regionId))
-
-                        # 审核通过
-                        print('审核通过：', goodsEditSkuExamine(sku_id, regionId))
-
-                        # 配置上线"线上"环境
-                        print('配置上线"线上"环境：', goodsEditSkuEnvironment(sku_id, regionId))
-
-                        # 配置绑定渠道
-                        print('配置绑定渠道：', goodsEditSkuChannel(sku_id, regionId))
-
-                        # 配置上架商品
-                        print('配置上架商品：', goodsEditSkuGoodsStatus(film_id, sku_id, regionId))
-
-                        # 查找正片信息ID
-                        print("正片信息查询：", goodsGetpositive(filmId, regionId)['data'][0])
-                        goodsPositive = goodsGetpositive(filmId, regionId)['data'][0]['positive'][0]['value']
-                        print("查找影片正片ID：", goodsPositive)
-
-                        print('修改商品价格：',
-                              goodsUpdateSku(spuId, filmId, filmName, sku_id, goodsPositive, spuReleaseStartTime,
-                                             spuReleaseEndtime))
-
-                        # 配置专场上线
-                        print('配置专场上线：', updateStatus(roomId, regionId))
-
-                        # print("跳出循环")
-                        config_status = "配置成功"
                         break
                     else:
-                        # print("判断失败，跳出本次循环")
-                        config_status = "配置失败"
+                        request.session['msg'] = "没有匹配到filmId"
                         continue
-                # print("用户循环执行完毕")
-                break
             else:
                 # print(star['userId'],userId)
                 # print(type(star['userId']), type(userId))
                 # print("判断失败，跳出本次循环")
-                config_status = "配置失败"
+                request.session['msg'] = "没有匹配到userId"
                 continue
-
-        context = {"config_statis":config_status}
-        return render(request, 'special_scene.html',context)
+        return redirect('/real_time_log/')
 
 
-
-
-
-
-
-@accept_websocket
+@login_check
 def real_time_log(request):
-    if request.is_websocket():
-        print('收到websocket请求')
+        return render(request,'msg_status.html')
 
-        log_file = openFile(
-            '/Users/chenhang/Desktop/pythonFile/python/untitled/practice/Django-program/HttpRunnerManager/logs/all.log')
 
-        data = {"log_file": log_file}
 
-        return render(request, 'ajax_logcat.html', data)
 
         # with open(settings.LOG_FILE, 'r', encoding='UTF-8') as f:
         #     log_length = len(f.readlines())
@@ -377,7 +352,10 @@ def ajax_logcat(request):
 
     name_dict = {
         'twz': 'Love python and Django',
-        'zqxt': 'I am teaching Django'}
+        'zqxt': 'I am teaching Django',
+        'toast': '这是一个提示文案'
+    }
+
 
     return render(request, 'ajax_logcat.html', name_dict)
 
