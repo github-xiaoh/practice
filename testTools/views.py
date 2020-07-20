@@ -1,6 +1,6 @@
 import logging
 import time
-
+import os
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.forms.models import model_to_dict
@@ -366,9 +366,9 @@ def ajax_dict(request):
 
 
 def ajax_file(request):
-
-    log_file = openFile(
-        '/Users/chenhang/Desktop/pythonFile/python/untitled/practice/Django-program/HttpRunnerManager/logs/script.log')
+    dir_file = '/Users/chenhang/Desktop/pythonFile/python/untitled/practice/Django-program/HttpRunnerManager/logs/script.log'
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    log_file = openFile(os.path.join(BASE_DIR,'logs/script.log'))
     # print(log_file)
 
     # log_file2 = str(log_file.decode('utf-8')).split('\\n')
