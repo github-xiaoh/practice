@@ -142,7 +142,7 @@
             <ul>
                 <li><a href="/userInfo/1/">海 外 充 值</a></li>
                 <li><a href="/createfilm/">创 建 影 片</a></li>
-                <li><a href="/special_scene/">创 建 专 场</a></li>
+                <li><a onclick="myFunction()">创 建 专 场</a></li>
                 <li><a href="/ajaxLogcat/">ajax practive</a></li>
 
             </ul>
@@ -263,6 +263,56 @@
 
         initFileInput("uploadfile");
     </script>
+
+    <script type="text/javascript">
+        function myFunction(){
+            var regionId;
+            while (true) {
+                var person=prompt("请添加的站点区域ID(北美1,台湾2,韩国3,港澳4","");
+                console.log("组合的布尔值",person !== null && person !== "" && !isNaN(person));
+                if (person !== null && person !== "" && !isNaN(person)) {
+                    console.log(typeof(person));
+                    console.log(person);
+                    if (person === "1" || person === "2" || person === "3" || person === "4") {
+                        console.log("person值：",person);
+                        regionId = person;
+                        break
+                    }
+                }
+            }
+            window.location.href = "/special_scene/?regionId=" + regionId;
+
+            {#$("#ajax_req").click(function(){#}
+            {#    $.ajax({#}
+            {#        dataType :'json',#}
+            {#        type : "GET",#}
+            {#        url : "/ajaxLogcat/",#}
+            {#        data : {#}
+            {#            "regionId" : regionId#}
+            {#        },#}
+            {#        success : function(data) {#}
+            {#            console.log(data);#}
+            {#            if(data.code==200){#}
+            {#                console.log(data);#}
+            {#                console.log(data);#}
+            {#                console.log("success");#}
+            {#                // location = "/index";#}
+            {#            }else{#}
+            {#                alert(data);#}
+            {#                console.log("no 200!")#}
+            {#                // return;#}
+            {#                }#}
+            {#            },#}
+            {#        error : function(data) {#}
+            {#            alert(data.msg);#}
+            {#            console.log("error")#}
+            {#        }#}
+            {#    });#}
+            //});
+
+        }
+    </script>
+
 </div>
 
 </body>

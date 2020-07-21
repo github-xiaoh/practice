@@ -275,11 +275,11 @@ def updateStatus(roomId,regionId):
 
 
 
-# special_name = "测试专场-韩国-CH0"
-# regionId = '3'
-# spuId = "RXSiDR7t5JOVvjF"
-# filmId =  "4932917517541910"
-# spuName = "北美测试全10分钟"
+special_name = "测试专场-韩国-CH0"
+regionId = '2'
+spuId = "RXSiDR7t5JOVvjF"
+filmId =  "4932917517541910"
+spuName = "北美测试全10分钟"
 
 
 # filmTime = getTimes()

@@ -1125,14 +1125,14 @@ def updateStatus(roomId,regionId):
     resultJ = json.loads(result.content)
     return resultJ
 
-filmTime = getTimes()
-startTime = filmTime[2]
+# filmTime = getTimes()
+# startTime = filmTime[2]
+#
+# print(startTime)
 
-print(startTime)
 
-
-# star_info_result = getGuestData(3)
-# spu_list_result = getPreProSpuList(3)
+# star_info_result = getGuestData(1)
+# spu_list_result = getPreProSpuList(1)
 # print(star_info_result)
 # print(spu_list_result)
 #

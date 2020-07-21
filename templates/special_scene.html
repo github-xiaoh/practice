@@ -13,9 +13,9 @@
             <dl class="am-icon-home" style="float: right;"> 当前位置： 专场创建 > <a href="#">专场创建</a></dl>
         </div>
 
-{#        <div style="margin: 10px 6px 0px 16px;width: 600px">#}
-{#                <h3 id = "config_status">执行结果查看:>>{{ request.session.msg }}</h3>#}
-{#        </div>#}
+        <div style="margin: 10px 6px 0px 16px;width: 600px">
+                <h3 id = "config_status">执行结果查看:>>{{ toast }}</h3>
+        </div>
 
         <div class="fbneirong">
 
@@ -24,15 +24,15 @@
                 <div class="form-group  has-feedback">
                     <label class="control-label col-md-1 text-primary" for="region_Id">区域ID:</label>
                     <div class="col-md-5">
-                        <input type="text" class="form-control" id="region_Id" name="region_Id" inputk="userinfo" lable="区域ID"
-                               aria-describedby="inputSuccess3Status" placeholder="请添加的站点区域ID(北美1,台湾2,韩国3,港澳4)" value="">
+                        <input type="text" class="form-control" id="region_Id" name="region_Id" inputk="imputV" lable="区域ID"
+                               aria-describedby="inputSuccess3Status" placeholder="请添加的站点区域ID(北美1,台湾2,韩国3,港澳4)" value="" readonly>
                         <span class="glyphicon glyphicon-random form-control-feedback" aria-hidden="true"></span>
                     </div>
                 </div>
                 <div class="form-group  has-feedback">
                     <label class="control-label col-md-1 text-primary" for="special_name">专场名称:</label>
                     <div class="col-md-5">
-                        <input type="text" class="form-control" id="special_name" name="special_name" inputk="userinfo" lable="专场名称"
+                        <input type="text" class="form-control" id="special_name" name="special_name" inputk="imputV" lable="专场名称"
                                aria-describedby="inputSuccess3Status" placeholder="请输入要创建的专场名称" value="">
                         <span class="glyphicon glyphicon-usd form-control-feedback" aria-hidden="true"></span>
                     </div>
@@ -41,7 +41,7 @@
                 <div class="form-group  has-feedback">
                     <label class="control-label col-md-1 text-primary" for="user_name">选择场主:</label>
                     <div class="col-md-5">
-                        <select name="star_user" class="form-control">
+                        <select name="star_user" class="form-control" inputk="imputV">
                                 <option value="请选择">请🥢选择</option>
                                 {% for foo in  star_info %}
                                     <option value="{{ foo.userId }}">{{ foo.nickname }}</option>
@@ -52,7 +52,7 @@
                 <div class="form-group  has-feedback">
                     <label class="control-label col-md-1 text-primary" for="user_name">选择影片:</label>
                     <div class="col-md-5">
-                        <select name="filmName" class="form-control">
+                        <select name="filmName" class="form-control" inputk="imputV">
                                 <option value="请选择">请🥢选择</option>
                                 {% for foo in  spu_list %}
                                     <option value="{{ foo.filmId }}">{{ foo.filmName }}</option>
@@ -89,46 +89,12 @@
 
 </body>
 
-
-<script type="text/javascript">
-
-    $(".field").change(function(){
-    var id = $(".field option:selected").val();
-    $.ajax({
-    dataType :'json',
-    type : "POST",
-    url : "11.php",
-    data : {
-    "id" : id
-
-    },
-
-    success : function(data) {
-    if(data.code==200){
-    alert(data.msg);
-    // location = "/index";
-    }else{
-    alert(data.msg);
-    // return;
-
-    }
-    },
-    error : function(data) {
-    alert(data.msg);
-
-    }
-    });
-
-
-    });
-
-</script>
-
 <script>
 
     $(function () {
             // 只要页面框架加载完成自动执行此函数
             Binkfunction();
+            $("#region_Id").val({{ regionId }})
         });
 
 
@@ -160,7 +126,7 @@
                 $('form .fbneirong span').remove();
 
 
-                $('.fbneirong form input[inputk="userinfo"]').each(function () {
+                $('.fbneirong form [inputk="imputV"]').each(function () {
                     // 每一个元素执行此匿名函数
                     // this
 

@@ -18,6 +18,17 @@
         <div class="fbneirong">
 
 {#            {% csrf_token %}#}
+
+            <div>++++++++++++++++++++++===================+++++++++++++++++++++</div>
+            <div id="ajax_alert">
+                <p>获取弹窗值并返回此页面</p>
+                <p>数字1：<input type="text" id="ajax_alert_1"></p>
+                <p>点击查看效果：
+                    <button class="btn btn-success" id="ajax_req">获取弹窗值并返回此页面</button>
+                </p>
+            </div>
+
+            <div>++++++++++++++++++++++===================+++++++++++++++++++++</div>
             <p>请输入两个数字</p>
             <form action="/add/" method="get">
                 a: <input type="text" id="a" name="a"> <br>
@@ -26,13 +37,14 @@
                 <button type="button" id='sum'>提交</button>
             </form>
 
-
+            <div>++++++++++++++++++++++===================+++++++++++++++++++++</div>
             <div id="dict">Ajax 加载字典</div>
             <p id="dict_result"></p>
 
             <div id="list">Ajax 加载列表</div>
             <p id="list_result"></p>
 
+            <div>++++++++++++++++++++++===================+++++++++++++++++++++</div>
             <div id="sum"> 和计算
                 <p>数字1：<input type="text" id="i1"></p>
                 <p>数字2：<input type="text" id="i2"></p>
@@ -42,6 +54,17 @@
                 </p>
             </div>
 
+            <div>++++++++++++++++++++++===================+++++++++++++++++++++</div>
+            <br>
+            <div id="ajax_imput">
+                <p>数字1：<input type="text" id="ajax_imput_1"></p>
+                <p>填充输入框：
+                    <button class="btn btn-success" id="ajax_req">ajax请求</button>
+                </p>
+            </div>
+
+            <div>++++++++++++++++++++++===================+++++++++++++++++++++</div>
+            <br>
             <div id="file">Ajax 加载文件内容</div>
             <br>
             <button class="btn btn-success" id="view_logs">
@@ -53,6 +76,7 @@
             <div style="height: 200px; overflow: auto;" id="content_logs">
                <div id="file_result" style="font-size: 14px;"></div>
             </div>
+
 
 {#            <div style="font-size: 18px">#}
 {#                <span>ip：{{ ip }}</span><br/>#}
@@ -90,9 +114,13 @@
 
 
 
+
+
+
+
 <script>
     $(document).ready(function(){
-        alert({{ log_file }});
+        {#alert({{ log_file }});#}
 
       // 求和 a + b
 
@@ -167,6 +195,46 @@
     });
 
 </script>
+
+
+
+
+<script type="text/javascript">
+
+    $("#ajax_req").click(function(){
+        $.ajax({
+            dataType :'json',
+            type : "POST",
+            url : "/ajax_req/",
+            data : {
+                "id" : "532"
+            },
+            success : function(data) {
+                console.log(data);
+                if(data.code==200){
+                    console.log(data.msg);
+                    $('#ajax_imput_1').val(data.code);
+                    console.log(data.data);
+                    console.log(data.data.twz);
+                    console.log(data.data.zqxt);
+                    console.log("success");
+                    // location = "/index";
+                }else{
+                    alert(data.msg);
+                    console.log("no 200!")
+                    // return;
+                    }
+                },
+            error : function(data) {
+                alert(data.msg);
+                console.log("error")
+            }
+        });
+    });
+
+</script>
+
+
 
 
 {##}
