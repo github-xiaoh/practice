@@ -89,6 +89,28 @@
 
 </body>
 
+
+
+<script>
+    $("#region_Id").click(function () {
+        while (true) {
+            var regionId=prompt("请添加的站点区域ID(北美1,台湾2,韩国3,港澳4","3");
+            console.log(typeof(regionId));
+            console.log("组合的布尔值",regionId !== null && regionId !== "" && !isNaN(regionId));
+            if (regionId !== null && regionId !== "" && !isNaN(regionId)) {
+                console.log(typeof(regionId));
+                console.log(regionId);
+                if (regionId === "1" || regionId === "2" || regionId === "3" || regionId === "4") {
+                    console.log("regionId：",regionId);
+                    $("#ajax_alert_1").val(regionId);
+                    break
+                }
+            }
+        }
+        window.location.href = ("/special_scene/?regionId=" + regionId)
+    })
+</script>
+
 <script>
 
     $(function () {

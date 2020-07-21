@@ -33,6 +33,7 @@ urlpatterns = [
     url(r'ajax_dict/',testView.ajax_dict),
     url(r'ajax_file/',testView.ajax_file),
     url(r'ajax_add/',testView.ajax_add),
+    url(r'ajax_req/',testView.ajax_req),
     url(r'special_scene/',testView.special_scene),
     url(r'^favicon\.ico$', RedirectView.as_view(url='/static/assets/img/favicon.ico')),
     url('^(?P<app>(\w+))/(?P<function>(\w+))/$', process),
