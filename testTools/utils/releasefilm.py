@@ -962,7 +962,13 @@ def editRoom(specialName,filmName,spuReleaseEndtime,spuReleaseStartTime,spuId,fi
             "showOwnerPhoto": True,
             "filmId": filmId,
             "type": 1,
-            "roomId": 0
+            "roomId": 0,
+            "celebrateVideoCover": "https://g.smartcinemausa.com/images/bfbf4ea0ec2144a48fcd91975d339a66-700-466.jpg",
+            "celebrateVideoType": 2,
+            "celebrateVideoUrl": "http://live-pull.smartcinema.com.cn/509live/stream_001_lhd.m3u8?auth_key=1731448998-0-0-9b47e5a8816fb86fe42f6649761b870d",
+            "warmVideoCover": "https://g.smartcinemausa.com/images/c2dbefb027464822bc2d5092ffadd9cc-1500-1000.jpg",
+            "warmVideoType": 1,
+            "warmVideoUrl": "http://smart-java-test.smartcinemausa.com/trailer/1595493080563_ieWQc.MP4"
         }
     )
 
