@@ -20,6 +20,19 @@
 {#            {% csrf_token %}#}
 
             <div>++++++++++++++++++++++===================+++++++++++++++++++++</div>
+            <div id="ajax_session_url">
+                <p>获取request.session['url']值并请求回来</p>
+                <p>请求url：<input type="text" id="ajax_session_url_1" readonly value="{{ request.session.url }}"></p>
+                <p>点击查看效果：
+                    <form method="get" action="{{ request.session.url }}">
+                        <input type="hidden" value="3" name="regionId">
+                        <button class="btn btn-success" id="ajax_alert_req">获取弹窗值并返回此页面</button>
+                    </form>
+
+                </p>
+            </div>
+
+            <div>++++++++++++++++++++++===================+++++++++++++++++++++</div>
             <div id="ajax_alert">
                 <p>获取弹窗值并返回此页面</p>
                 <p>数字1：<input type="text" id="ajax_alert_1" readonly></p>

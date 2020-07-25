@@ -20,10 +20,17 @@
         <div class="fbneirong">
 
 
-            <form class="form-horizontal" id="select_username" method="get" action="/api/index/">
+            <form class="form-horizontal" id="select_username" method="get" action="{{ request.session.url }}">
+
+                <div class="form-group  has-feedback">
+                    <div class="col-md-5">
+                        <input type="hidden" class="form-control" id="regionId" name="regionId" placeholder="请添加的站点区域ID(北美1,台湾2,韩国3,港澳4)" value="3">
+                    </div>
+                </div>
+
                 <div class="am-form-group am-cf">
                     <div class="you" style="margin-left: 8%;">
-                        <button type="submit" class="am-btn am-btn-success am-radius" id="send1">点击跳转回首页</button>
+                        <button type="submit" class="am-btn am-btn-success am-radius" id="send1">点击跳转回上一页</button>
                             <!--   onclick="info_ajax('#add_project', '/api/add_project/')" -->
                     </div>
                 </div>
@@ -37,3 +44,13 @@
 
 
 {% endblock %}
+
+
+<script>
+    $("#send1").click(function () {
+        var req_url = $("#req_url").val();
+        console.log("qqinggiuqskdj");
+        console.log(req_url);
+    })
+
+</script>

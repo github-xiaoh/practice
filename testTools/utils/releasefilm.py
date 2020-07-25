@@ -865,17 +865,17 @@ def getPreProSpuList(regionId):
 
 def editRoom(specialName,filmName,spuReleaseEndtime,spuReleaseStartTime,spuId,filmId,userName,userId,regionId,startTime):
     """
-    :param specialName:
-    :param filmName:
-    :param spuReleaseEndtime:
-    :param spuReleaseStartTime:
-    :param spuId:
-    :param filmId:
-    :param userName:
-    :param userId:
-    :param regionId:
-    :param startTime:
-    :return:
+    :param specialName: 专场名称
+    :param filmName: 影片名称
+    :param spuReleaseEndtime: SPU下映时间
+    :param spuReleaseStartTime: SPU上映时间
+    :param spuId: SPUID
+    :param filmId: 影片ID
+    :param userName: 用户名称
+    :param userId: 用户ID
+    :param regionId: 请求区域ID
+    :param startTime: 专场开始时间
+    :return: 返回response信息
     """
     url = "http://activity-manage-test.smartcinemausa.com/inner/activity/editRoom"
     headers = {

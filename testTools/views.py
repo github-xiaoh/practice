@@ -380,6 +380,7 @@ def ajax_logcat(request):
 
     regionId = request.GET.get("regionId")
     print("这是获取的区域ID",regionId)
+    request.session['url'] = "/ajaxLogcat/"
 
     return render(request, 'ajax_logcat.html', name_dict)
 
