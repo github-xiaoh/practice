@@ -20,8 +20,8 @@
         <div class="fbneirong">
             <form class="form-horizontal" id="select_username" method="get" action='/createfilm'>
                 <div class="form-group  has-feedback">
-                    <label class="control-label col-md-1 text-primary" for="film_name">电影名称：</label>
-                    <div class="col-md-5">
+                    <label class="control-label col-sm-1 text-primary" for="film_name">电影名称：</label>
+                    <div class="col-sm-5">
                         <input type="text" class="form-control" id="film_name"
                                aria-describedby="inputSuccess3Status" name="film_name" placeholder="请输入创建的影片名"
                                value="" inputk="userinfo" lable="电影名称" >
@@ -39,17 +39,17 @@
 
                 <div class="am-form-group am-cf">
                     <div class="you" style="margin-left: 8%;">
-                        <button type="submit" class="am-btn am-btn-success am-radius" id="send1">点 击 提 交</button>
+                        <button type="submit" class="btn btn-primary" id="send1">点 击 提 交</button>
                             <!--   onclick="info_ajax('#add_project', '/api/add_project/')" -->
                     </div>
                 </div>
             </form>
 
             <br>
-            <button class="btn btn-success" id="view_logs">
+            <button class="btn btn-info" id="view_logs">
                 查看实时日志
             </button>
-            <button class="btn btn-danger" id="close_logs" style="margin-left: 40px;">
+            <button class="btn btn-secondary" id="close_logs" style="margin-left: 40px;">
                 关闭实时日志
             </button>
             <div style="height: 200px; overflow: auto;" id="content_logs">
