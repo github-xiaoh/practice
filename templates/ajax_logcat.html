@@ -26,7 +26,17 @@
                 <p>点击查看效果：
                     <form method="get" action="{{ request.session.url }}">
                         <input type="hidden" value="3" name="regionId">
-                        <button class="btn btn-success" id="ajax_alert_req">获取弹窗值并返回此页面</button>
+                <div style="width: 400px; height: 30px">
+                    <div style="width: 100px;">
+                        <h3>输入框</h3>
+                    </div>
+                    <div style="width: 100px;"><input type="text" class="form-control" id="film_name"
+                               aria-describedby="inputSuccess3Status" name="film_name" placeholder="请输入创建的影片名"
+                               value="" inputk="userinfo" lable="电影名称" >
+                    </div>
+                </div>
+
+                        <button class="btn btn-primary" id="ajax_alert_req">获取弹窗值并返回此页面</button>
                     </form>
 
                 </p>
@@ -43,7 +53,7 @@
 
             <div>++++++++++++++++++++++===================+++++++++++++++++++++</div>
             <p>请输入两个数字</p>
-            <form action="/add/" method="get">
+            <form action="/sc_cms/add/" method="get">
                 a: <input type="text" id="a" name="a"> <br>
                 b: <input type="text" id="b" name="b"> <br>
                 <p>result: <span id='result'></span></p>
@@ -142,7 +152,7 @@
                 }
             }
         }
-        window.location.href = ("/ajaxLogcat/?regionId=" + regionId)
+        window.location.href = ("/sc_cms/ajaxLogcat/?regionId=" + regionId)
     })
 </script>
 
@@ -160,14 +170,14 @@
         var a = $("#a").val();
         var b = $("#b").val();
 
-        $.get("/add/",{'a':a,'b':b}, function(ret){
+        $.get("/sc_cms/add/",{'a':a,'b':b}, function(ret){
             $('#result').html(ret);
         })
        });
 
       // 列表 list
       $('#list').click(function(){
-          $.getJSON('/ajax_list/',function(ret){
+          $.getJSON('/sc_cms/ajax_list/',function(ret){
             //返回值 ret 在这里是一个列表
               console.log(ret.length);
             for (var i = ret.length - 1; i >= 0; i--) {
@@ -180,7 +190,7 @@
 
       // 字典 dict
       $('#dict').click(function(){
-          $.getJSON('/ajax_dict/',function(ret){
+          $.getJSON('/sc_cms/ajax_dict/',function(ret){
               //返回值 ret 在这里是一个字典
               $('#dict_result').append(ret.twz + '<br>' + ret.zqxt + '<br>');
               // 也可以用 ret['twz']
@@ -209,7 +219,7 @@
 
       $("#btn_sum").click(function () {
           $.ajax({
-              url:"/ajax_add/",
+              url:"/sc_cms/ajax_add/",
               type:"POST",
               data:{"i1":$("#i1").val(),"i2":$("#i2").val()},
               success:function (data) {
@@ -236,7 +246,7 @@
         $.ajax({
             dataType :'json',
             type : "POST",
-            url : "/ajax_req/",
+            url : "/sc_cms/ajax_req/",
             data : {
                 "id" : "532"
             },

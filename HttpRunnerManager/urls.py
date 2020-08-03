@@ -13,28 +13,21 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url,include
 from django.contrib import admin
 from django.views.generic import RedirectView
 
 from HttpRunnerManager.activator import process
 from ApiManager import views as views
-from testTools import views as testView
-from sc_pay import views as pay_views
+from sc_pay import urls as url_sc_pay
+from testTools import urls as url_sc_cms
+from testTools.views import ajax_file
 
 urlpatterns = [
-    url(r'^userInfo/(?P<page_page>\d+)/',testView.userInfo),
-    url(r'^createfilm',testView.createfilm),
-    url(r'^account/(?P<page_num>\d+)/',pay_views.account_balance),
+    url(r'^sc_cms/',include(url_sc_cms)),
+    url(r'^sc_pay/',include(url_sc_pay)),
+    url(r'ajax_file/$',ajax_file),
     url(r'^admin/', admin.site.urls),
-    url(r'^ajaxLogcat/',testView.ajax_logcat),
-    url(r'^real_time_log/',testView.real_time_log),
-    url(r'ajax_list/',testView.ajax_list),
-    url(r'ajax_dict/',testView.ajax_dict),
-    url(r'ajax_file/',testView.ajax_file),
-    url(r'ajax_add/',testView.ajax_add),
-    url(r'ajax_req/',testView.ajax_req),
-    url(r'special_scene/',testView.special_scene),
     url(r'^favicon\.ico$', RedirectView.as_view(url='/static/assets/img/favicon.ico')),
     url('^(?P<app>(\w+))/(?P<function>(\w+))/$', process),
     url('^(?P<app>(\w+))/(?P<function>(\w+))/(?P<id>(\w+))/$', process),

@@ -333,8 +333,8 @@ def special_scene(request):
 
                             break
                     break
-            request.session['url'] = "/special_scene/"
-            return redirect('/real_time_log/')
+            request.session['url'] = "/sc_cms/special_scene/"
+            return redirect('/sc_cms/real_time_log/')
 
 
 @login_check
@@ -380,7 +380,7 @@ def ajax_logcat(request):
 
     regionId = request.GET.get("regionId")
     print("这是获取的区域ID",regionId)
-    request.session['url'] = "/ajaxLogcat/"
+    request.session['url'] = "/sc_cms/ajaxLogcat/"
 
     return render(request, 'ajax_logcat.html', name_dict)
 
