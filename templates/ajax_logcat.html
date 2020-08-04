@@ -20,6 +20,10 @@
 {#            {% csrf_token %}#}
 
             <div>++++++++++++++++++++++===================+++++++++++++++++++++</div>
+
+            <h3><a href="{% url 'sc_cms:redirectUrl' %}">点击跳转页面url</a></h3>
+
+            <div>++++++++++++++++++++++===================+++++++++++++++++++++</div>
             <div id="ajax_session_url">
                 <p>获取request.session['url']值并请求回来</p>
                 <p>请求url：<input type="text" id="ajax_session_url_1" readonly value="{{ request.session.url }}"></p>

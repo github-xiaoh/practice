@@ -20,7 +20,7 @@
         <div class="fbneirong">
 
 
-            <form class="form-horizontal" id="select_username" method="post" action='/sc_cms/special_scene/'>
+            <form class="form-horizontal" id="select_username" method="post" action='{% url 'sc_cms:special_scene' %}'>
                 <div class="form-group  has-feedback">
                     <label class="control-label col-md-1 text-primary" for="region_Id">区域ID:</label>
                     <div class="col-md-5">
@@ -107,7 +107,7 @@
                 }
             }
         }
-        window.location.href = ("/sc_cms/special_scene/?regionId=" + regionId)
+        window.location.href = ("{% url 'sc_cms:special_scene' %}?regionId=" + regionId)
     })
 </script>
 

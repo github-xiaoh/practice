@@ -4,6 +4,7 @@ import os
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.forms.models import model_to_dict
+from django.urls import reverse
 from dwebsocket import accept_websocket
 
 from HttpRunnerManager import settings
@@ -333,8 +334,8 @@ def special_scene(request):
 
                             break
                     break
-            request.session['url'] = "/sc_cms/special_scene/"
-            return redirect('/sc_cms/real_time_log/')
+            request.session['url'] = reverse('sc_cms:special_scene')
+            return redirect(reverse('sc_cms:redirect_page'))
 
 
 @login_check
@@ -383,6 +384,17 @@ def ajax_logcat(request):
     request.session['url'] = "/sc_cms/ajaxLogcat/"
 
     return render(request, 'ajax_logcat.html', name_dict)
+
+def redirect_url(request):
+    print("开始跳转")
+    redirect_url_1 = reverse('sc_cms:redirectUrl')
+    print(redirect_url_1)
+    print(reverse('sc_cms:redirectUrl'))
+    print(reverse('sc_cms:ajax_test'))
+    print("跳转a-test.html页面")
+    # return redirect(reverse('sc_cms:ajax_test'))
+    return render(request,'a-test.html')
+
 
 def ajax_req(request):
 

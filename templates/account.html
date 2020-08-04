@@ -13,7 +13,7 @@
         </div>
 
         <div class="fbneirong">
-            <form class="form-horizontal" id="select_username" method="get" action='/sc_cms/userInfo/1/'>
+            <form class="form-horizontal" id="select_username" method="get" action='{% url 'sc_cms:user_info' '1' %}'>
                 <div class="form-group  has-feedback">
                     <label class="control-label col-md-1 text-primary" for="user_phone">手机号：</label>
                     <div class="col-md-5">
@@ -84,7 +84,7 @@
             </form>
 
 
-        <form class="form-horizontal" id="add_account" method="get" action="/sc_pay/account/1/">
+        <form class="form-horizontal" id="add_account" method="get" action="{% url 'sc_pay:account' '1' %}">
                 <div class="form-group  has-feedback">
                     <label class="control-label col-md-1 text-primary" for="userId">用户ID：</label>
                     <div class="col-md-5">
