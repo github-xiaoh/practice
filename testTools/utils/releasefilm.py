@@ -1070,7 +1070,33 @@ def editDrawerInfo(roomId,userName,filmName,regionId):
                         "subTitle": "自定义醒目内容",
                         "content": "自定义内容，用来H5前段展示使用"
                     }]
-                }
+                },
+                "zh_TW": {
+                    "drawerList": [{
+                        "type": 1,
+                        "show": 1,
+                        "title": "場主介紹",
+                        "userName": userName,
+                        "userImage": "",
+                        "userRemark": userName
+                    }, {
+                        "type": 2,
+                        "show": 1,
+                        "title": "影片介紹",
+                        "filmName": "新建影片测试直播",
+                        "filmType": "喜劇/紀錄片/愛情",
+                        "filmImg": "",
+                        "descInfo": "根据2018年5月14日四川航空3U8633航班机组成功处置特情真实事件改编。机组执行航班任务时，在万米高空突遇驾驶舱风挡玻璃爆裂脱落、座舱释压的极端罕见险情，生死关头，他们临危不乱、果断应对、正确处置，确保了机上全部人员的生命安全，创造了世界民航史上的奇迹。",
+                        "subTitle": "",
+                        "content": ""
+                    }, {
+                        "type": 3,
+                        "show": 1,
+                        "title": "自定义主标题",
+                        "subTitle": "自定义醒目内容",
+                        "content": "自定义内容，用来H5前段展示使用"
+                    }]
+                },
             }
         }
     )
@@ -1191,7 +1217,7 @@ userId = 532
 #
 # roomId = room_info['data']['id']
 #
-# print("编辑场信息:：",editDrawerInfo(roomId,userName,filmName,regionId))
+print("编辑场信息:：",editDrawerInfo(869,"user8945wu","北美测试直播KOL",1))
 #
 # # 获取专场列表信息，用于寻找skuId
 # special_list = getRoomData(filmId,regionId)

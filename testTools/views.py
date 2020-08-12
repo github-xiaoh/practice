@@ -285,6 +285,7 @@ def special_scene(request):
                             else:
                                 # 获取场次ID
                                 roomId = room_info['data']['id']
+                                logger.info({"roomId:":roomId,"userName":userName,"filmName":filmName,"regionId":regionId})
                                 logger.info("编辑场信息：{0}".format(editDrawerInfo(roomId, userName, filmName, regionId)))
 
                                 # 获取专场列表信息，用于寻找skuId
