@@ -863,7 +863,7 @@ def getPreProSpuList(regionId):
     resultJ = json.loads(result.content)
     return resultJ
 
-def editRoom(specialName,filmName,spuReleaseEndtime,spuReleaseStartTime,spuId,filmId,userName,userId,regionId,startTime):
+def editRoom(specialName,filmName,spuReleaseEndtime,spuReleaseStartTime,spuId,filmId,userName,userId,regionId,startTime,synopsis):
     """
     :param specialName: 专场名称
     :param filmName: 影片名称
@@ -890,7 +890,7 @@ def editRoom(specialName,filmName,spuReleaseEndtime,spuReleaseStartTime,spuId,fi
                     "warmVoiceRecord": "",
                     "backPictureUrl": "https://g.smartcinemausa.com/images/f27d83b8088042fbaffc3141950989d4-700-466.jpg",
                     "activityImgUrl": "https://g.smartcinemausa.com/images/cdf8e8668a3841088f1e4f9ee669bfff-700-466.jpg",
-                    "remark": "한글 은 테스트 에 사용 되 는 데 이 터 를 장의 별로 의미 있 는 표현 이 아니다.",
+                    "remark": synopsis + "한글 은 테스트 에 사용 되 는 데 이 터 를 장의 별로 의미 있 는 표현 이 아니다.",
                     "filmName": "한국어" + filmName,
                     "spuReleaseEndtime": spuReleaseEndtime,
                     "spuReleaseStartTime": spuReleaseStartTime,
@@ -907,7 +907,7 @@ def editRoom(specialName,filmName,spuReleaseEndtime,spuReleaseStartTime,spuId,fi
                     "warmVoiceRecord": "",
                     "backPictureUrl": "https://g.smartcinemausa.com/images/f27d83b8088042fbaffc3141950989d4-700-466.jpg",
                     "activityImgUrl": "https://g.smartcinemausa.com/images/cdf8e8668a3841088f1e4f9ee669bfff-700-466.jpg",
-                    "remark": "繁体场次描述用来测试的数据，不是很有意义的一段语言描述繁体繁体.",
+                    "remark": synopsis + "繁体场次描述用来测试的数据，不是很有意义的一段语言描述繁体繁体.",
                     "filmName": "繁体" + filmName,
                     "spuReleaseEndtime": spuReleaseEndtime,
                     "spuReleaseStartTime": spuReleaseStartTime,
@@ -924,7 +924,7 @@ def editRoom(specialName,filmName,spuReleaseEndtime,spuReleaseStartTime,spuId,fi
                     "warmVoiceRecord": "",
                     "backPictureUrl": "https://g.smartcinemausa.com/images/f27d83b8088042fbaffc3141950989d4-700-466.jpg",
                     "activityImgUrl": "https://g.smartcinemausa.com/images/cdf8e8668a3841088f1e4f9ee669bfff-700-466.jpg",
-                    "remark": "简体场次描述用来测试的数据，不是很有意义的一段语言描述",
+                    "remark": synopsis + "简体场次描述用来测试的数据，不是很有意义的一段语言描述",
                     "filmName": filmName,
                     "spuReleaseEndtime": spuReleaseEndtime,
                     "spuReleaseStartTime": spuReleaseStartTime,
@@ -941,7 +941,7 @@ def editRoom(specialName,filmName,spuReleaseEndtime,spuReleaseStartTime,spuId,fi
                     "warmVoiceRecord": "",
                     "backPictureUrl": "https://g.smartcinemausa.com/images/f27d83b8088042fbaffc3141950989d4-700-466.jpg",
                     "activityImgUrl": "https://g.smartcinemausa.com/images/cdf8e8668a3841088f1e4f9ee669bfff-700-466.jpg",
-                    "remark": "Korean session description is used to test the data, not a very meaningful language description",
+                    "remark": synopsis + "Korean session description is used to test the data, not a very meaningful language description",
                     "filmName": "testSource" + filmName,
                     "spuReleaseEndtime": spuReleaseEndtime,
                     "spuReleaseStartTime": spuReleaseStartTime,

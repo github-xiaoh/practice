@@ -242,6 +242,7 @@ def special_scene(request):
         specialName = request.POST.get("special_name")
         userId = request.POST.get("star_user")
         filmId = request.POST.get("filmName")
+        specialSynopsis = request.POST.get("special_synopsis")
         if userId  == "请选择" or filmId == "请选择":
             star_info_result = getGuestData(regionId)
             spu_list_result = getPreProSpuList(regionId)
@@ -277,7 +278,7 @@ def special_scene(request):
 
                             # 编辑场信息
                             room_info = editRoom(specialName, filmName, spuReleaseEndtime, spuReleaseStartTime, spuId,
-                                                 filmId, userName, userId, regionId, int(round((time.time())) * 1000))
+                                                 filmId, userName, userId, regionId, int(round((time.time())) * 1000),specialSynopsis)
                             if room_info['msg'] == "获取影片正片信息为空":
                                 logger.info("专场信息：{room_info}".format(room_info=room_info))
                                 request.session['msg'] = "获取影片正片信息为空"
