@@ -89,6 +89,7 @@ def setup_log(log_name):
     # 创建logger对象。传入logger名字
     logger = logging.getLogger(log_name)
     log_path = os.path.join("",log_name)
+    print(log_path)
     # 设置日志记录等级
     logger.setLevel(logging.INFO)
     # interval 滚动周期，
@@ -111,6 +112,11 @@ def setup_log(log_name):
     logger.addHandler(file_handler)
     return logger
 
+# logging_testTools = setup_log(" testTools ")
+#
+# logging_testTools.info("输出日志1")
+# logging_testTools.info("输出日志2")
+# logging_testTools.info("输出日志3")
 
 # path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # print(path)

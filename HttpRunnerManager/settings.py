@@ -220,11 +220,13 @@ LOGGING = {
         },
         'default': {
             'level': 'DEBUG',
-            'class': 'logging.handlers.RotatingFileHandler',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
             'filename': os.path.join(BASE_DIR, 'logs/all.log'),
-            'maxBytes': 1024 * 1024 * 100,
+            # 'maxBytes': 1024 * 1024 * 100,
             'backupCount': 5,
             'formatter': 'standard',
+            'when': 'midnight',
+            'interval': 1,
         },
         'console': {
             'level': 'DEBUG',
@@ -233,19 +235,34 @@ LOGGING = {
         },
         'request_handler': {
             'level': 'DEBUG',
-            'class': 'logging.handlers.RotatingFileHandler',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
             'filename': os.path.join(BASE_DIR, 'logs/script.log'),
-            'maxBytes': 1024 * 1024 * 100,
+            # 'maxBytes': 1024 * 1024 * 100,
             'backupCount': 5,
             'formatter': 'standard',
+            'when': 'midnight',
+            'interval': 1,
         },
         'scprits_handler': {
             'level': 'DEBUG',
-            'class': 'logging.handlers.RotatingFileHandler',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
             'filename': os.path.join(BASE_DIR, 'logs/script.log'),
-            'maxBytes': 1024 * 1024 * 100,
+            # 'maxBytes': 1024 * 1024 * 100,
             'backupCount': 5,
             'formatter': 'standard',
+            'when': 'midnight',
+            'interval': 1,
+        },
+
+        'test_tools': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs/script.log'),
+            # 'maxBytes': 1024 * 1024 * 100,
+            'backupCount': 5,
+            'formatter': 'standard',
+            'when': 'midnight',
+            'interval': 1,
         },
     },
     'loggers': {
@@ -271,6 +288,12 @@ LOGGING = {
         },
         'scripts': {
             'handlers': ['scprits_handler', 'console'],
+            'level': 'DEBUG',
+            'propagate': True
+        },
+
+        'testTools': {
+            'handlers': ['test_tools', 'console'],
             'level': 'DEBUG',
             'propagate': True
         },

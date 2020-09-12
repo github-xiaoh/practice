@@ -1217,7 +1217,7 @@ userId = 532
 #
 # roomId = room_info['data']['id']
 #
-print("编辑场信息:：",editDrawerInfo(869,"user8945wu","北美测试直播KOL",1))
+# print("编辑场信息:：",editDrawerInfo(869,"user8945wu","北美测试直播KOL",1))
 #
 # # 获取专场列表信息，用于寻找skuId
 # special_list = getRoomData(filmId,regionId)

@@ -18,11 +18,13 @@ from .utils.releasefilm import mediaGetfilmList, mediaSendFilm, mediaAddphoto, m
     goodsEditSkuExamine, goodsEditSkuGoodsStatus, cmsFilmRelease, getTimes, mediaAddsource, goodsEditProduct, \
     getGuestData, getPreProSpuList, getRoomData, editRoom, editDrawerInfo, goodsUpdateSku, updateStatus
 from .utils.fileOperation import openFile, newFile
-from .utils.common import Page
+from .utils.common import Page, setup_log
 
+# log_testTools = setup_log("testTools")
+log_testTools = logging.getLogger('testTools')
 
-logger = logging.getLogger('HttpRunnerManager')
-
+logger = logging.getLogger('testTools')
+# logger = setup_log("testTools")
 
 @login_check
 def userInfo(request, page_page):
@@ -373,6 +375,8 @@ def ajax_file(request):
 
 
 
+
+
 def ajax_logcat(request):
 
     name_dict = {
@@ -382,7 +386,7 @@ def ajax_logcat(request):
     }
 
     regionId = request.GET.get("regionId")
-    print("这是获取的区域ID",regionId)
+    log_testTools.info("这是获取的区域ID：{0}".format(regionId))
     request.session['url'] = "/sc_cms/ajaxLogcat/"
 
     return render(request, 'ajax_logcat.html', name_dict)
@@ -431,14 +435,28 @@ def ajax_dict(request):
 
 def ajax_add(request):
 
-    i1 = request.POST.get("i1")
-    i2 = request.POST.get("i2")
+    if request.method == 'POST':
 
-    print(request)
-    print(i1, i2)
+        i1 = request.POST.get("i1")
+        i2 = request.POST.get("i2")
 
-    result = int(i1) + int(i2)
+        print(request)
+        print(i1, i2)
 
-    return HttpResponse(result)
+        result = int(i1) + int(i2)
+
+        return HttpResponse(result)
+    else:
+        print(request)
+
+        i1 = request.GET.get("a")
+        i2 = request.GET.get("b")
+
+        print(i1, i2)
+
+        result = int(i1) + int(i2)
+
+        return HttpResponse(result)
+
 
 # Create your views here.

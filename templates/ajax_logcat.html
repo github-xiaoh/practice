@@ -57,7 +57,7 @@
 
             <div>++++++++++++++++++++++===================+++++++++++++++++++++</div>
             <p>请输入两个数字</p>
-            <form action="/sc_cms/add/" method="get">
+            <form action="/sc_cms/ajax_add/" method="get">
                 a: <input type="text" id="a" name="a"> <br>
                 b: <input type="text" id="b" name="b"> <br>
                 <p>result: <span id='result'></span></p>
@@ -174,7 +174,7 @@
         var a = $("#a").val();
         var b = $("#b").val();
 
-        $.get("/sc_cms/add/",{'a':a,'b':b}, function(ret){
+        $.get("/sc_cms/ajax_add/",{'a':a,'b':b}, function(ret){
             $('#result').html(ret);
         })
        });
