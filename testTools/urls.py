@@ -14,4 +14,5 @@ urlpatterns = [
     url(r'ajax_req/$',views.ajax_req),
     url(r'special_scene/$',views.special_scene,name='special_scene'),
     url(r'redirect_url/$',views.redirect_url,name='redirectUrl'),
+    url(r'operation/$',views.coupon_create,name='operation'),
 ]

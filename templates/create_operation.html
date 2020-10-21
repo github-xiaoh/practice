@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+{% block title %}票券创建{% endblock %}
+{% load staticfiles %}
+
+
+{% block content %}
+<body>
+
+    <div class="admin-biaogelist">
+
+        <div class="listbiaoti am-cf">
+            <ul class="am-icon-flag on"> 票券创建</ul>
+            <dl class="am-icon-home" style="float: right;"> 当前位置： 票券创建 > <a href="#">票券创建</a></dl>
+        </div>
+
+        <div style="margin: 10px 6px 0px 16px;width: 600px">
+                <h3 id = "config_status">执行结果查看:>>{{ toast }}</h3>
+        </div>
+
+        <div class="fbneirong">
+
+
+            <form class="form-horizontal" id="select_username" method="post" action='{% url 'sc_cms:operation' %}'>
+                <div class="form-group  has-feedback">
+                    <label class="control-label col-md-1 text-primary" for="region_Id">票券ID:</label>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" id="region_id" name="region_id"  lable="票券类型"
+                               aria-describedby="inputSuccess3Status" placeholder="请选择票券类型(0：CDK:1：兑换券:2：定额券:3：立减券)" value="1" readonly>
+                        <span class="glyphicon glyphicon-random form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                </div>
+{#                <div class="form-group  has-feedback">#}
+{#                    <label class="control-label col-md-1 text-primary" for="special_name">专场名称:</label>#}
+{#                    <div class="col-md-5">#}
+{#                        <input type="text" class="form-control" id="special_name" name="special_name" inputk="imputV" lable="专场名称"#}
+{#                               aria-describedby="inputSuccess3Status" placeholder="请输入要创建的专场名称" value="">#}
+{#                        <span class="glyphicon glyphicon-usd form-control-feedback" aria-hidden="true"></span>#}
+{#                    </div>#}
+{#                </div>#}
+{##}
+{#                <div class="form-group  has-feedback">#}
+{#                    <label class="control-label col-md-1 text-primary" for="special_synopsis">专场简介:</label>#}
+{#                    <div class="col-md-5">#}
+{#                        <input type="text" class="form-control" id="special_synopsis" name="special_synopsis" inputk="imputV" lable="专场简介"#}
+{#                               aria-describedby="inputSuccess3Status" placeholder="用于专场列表测试区分专场" value="">#}
+{#                        <span class="glyphicon glyphicon-king form-control-feedback" aria-hidden="true"></span>#}
+{#                    </div>#}
+{#                </div>#}
+{##}
+{#                <div class="form-group  has-feedback">#}
+{#                    <label class="control-label col-md-1 text-primary" for="user_name">选择场主:</label>#}
+{#                    <div class="col-md-5">#}
+{#                        <select name="star_user" class="form-control" inputk="imputV">#}
+{#                                <option value="请选择">请🥢选择</option>#}
+{#                                {% for foo in  star_info %}#}
+{#                                    <option value="{{ foo.userId }}">{{ foo.nickname }}</option>#}
+{#                                {% endfor %}#}
+{#                        </select>#}
+{#                    </div>#}
+{#                </div>#}
+                <div class="form-group  has-feedback">
+                    <label class="control-label col-md-1 text-primary" for="user_name">票券类型:</label>
+                    <div class="col-md-5">
+                        <select name="auditGenre" class="form-control" inputk="imputV" lable="票券类型" >
+                                <option value="请选择">选择票券类型</option>
+                                <option value="1">兑换券</option>
+                                <option value="2">定额券</option>
+                                <option value="3">立减券</option>
+{#                                {% for foo in  spu_list %}#}
+{#                                    <option value="{{ foo.filmId }}">{{ foo.filmName }}</option>#}
+{#                                {% endfor %}#}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="am-form-group am-cf">
+                    <div class="you" style="margin-left: 8%;">
+                        <button type="submit" class="btn btn-primary" id="send1">点 击 提 交</button>
+                            <!--   onclick="info_ajax('#add_project', '/api/add_project/')" -->
+
+                    </div>
+                </div>
+            </form>
+
+            <br>
+            <button class="btn btn-info" id="view_logs">
+                查看实时日志
+            </button>
+            <button class="btn btn-secondary" id="close_logs" style="margin-left: 40px;">
+                关闭实时日志
+            </button>
+            <div style="height: 200px; overflow: auto;" id="content_logs">
+               <div id="file_result" style="font-size: 14px;"></div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+</body>
+
+
+
+{#<script>#}
+{#    $("#auditGenre").click(function () {#}
+{#        while (true) {#}
+{#            var regionId=prompt("请添加的站点区域ID(北美1,台湾2,韩国3,港澳4","3");#}
+{#            console.log(typeof(regionId));#}
+{#            console.log("组合的布尔值",regionId !== null && regionId !== "" && !isNaN(regionId));#}
+{#            if (regionId !== null && regionId !== "" && !isNaN(regionId)) {#}
+{#                console.log(typeof(regionId));#}
+{#                console.log(regionId);#}
+{#                if (regionId === "1" || regionId === "2" || regionId === "3" || regionId === "4") {#}
+{#                    console.log("regionId：",regionId);#}
+{#                    $("#ajax_alert_1").val(regionId);#}
+{#                    break#}
+{#                }#}
+{#            }#}
+{#        }#}
+{#        window.location.href = ("{% url 'sc_cms:special_scene' %}?regionId=" + regionId)#}
+{#    })#}
+{#</script>#}
+
+<script>
+
+    $(function () {
+            // 只要页面框架加载完成自动执行此函数
+            Binkfunction();
+            $("#region_Id").val({{ regionId }})
+        });
+
+
+    // 文件内容
+
+     $('#view_logs').click(function () {
+        $.getJSON('/ajax_file/', function (ret) {
+          //返回值 ret 在这里是一个字典
+          console.log(ret.length);
+          for (var i = ret.length - 1; i >= 0; i--) {
+              $('#file_result').append(ret[i] + '<br>');
+          }
+      });
+      $("#content_logs").scrollTop($("#content_logs")[0].scrollHeight);
+      });
+
+      $('#close_logs').click(function () {
+          console.log("删除日志内容");
+          $('#file_result').empty();
+      });
+
+    function Binkfunction() {
+
+            $('form button[id="send1"]').click(function () {
+                //  一点击submit执行此函数内容
+
+                var flag = true;
+
+                $('form .fbneirong span').remove();
+
+
+                $('.fbneirong form [inputk="imputV"]').each(function () {
+                    // 每一个元素执行此匿名函数
+                    // this
+
+                    console.log(this);
+                    var val = $(this).val();
+                    console.log('检测是否有值：',val.length);
+                    if (val.length<=0){
+
+                        var label = $(this).attr('lable');
+                        console.log(label);
+                        alert(label + "不能为空");
+                        flag = false;
+                    }
+
+                });
+                return flag;
+
+            });
+
+
+        }
+
+</script>
+
+
+
+{% endblock %}

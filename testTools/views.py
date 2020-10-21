@@ -19,6 +19,7 @@ from .utils.releasefilm import mediaGetfilmList, mediaSendFilm, mediaAddphoto, m
     getGuestData, getPreProSpuList, getRoomData, editRoom, editDrawerInfo, goodsUpdateSku, updateStatus
 from .utils.fileOperation import openFile, newFile
 from .utils.common import Page, setup_log
+from .utils.operation import Coupon_create
 
 # log_testTools = setup_log("testTools")
 log_testTools = logging.getLogger('testTools')
@@ -26,7 +27,7 @@ log_testTools = logging.getLogger('testTools')
 logger = logging.getLogger('testTools')
 # logger = setup_log("testTools")
 
-@login_check
+# @login_check
 def userInfo(request, page_page):
     """
     项目列表
@@ -69,7 +70,7 @@ def userInfo(request, page_page):
         # HttpResponse(json.dumps(context),content_type="application/json")
 
 
-@login_check
+# @login_check
 def createfilm(request):
     """
     项目列表
@@ -223,7 +224,7 @@ def createfilm(request):
         return render(request, 'create_film.html', context)
 
 
-@login_check
+# @login_check
 def special_scene(request):
 
     if request.method == "GET":
@@ -342,7 +343,52 @@ def special_scene(request):
             return redirect(reverse('sc_cms:redirect_page'))
 
 
-@login_check
+def coupon_create(request):
+
+    if request.method == "GET":
+        return render(request, 'create_operation.html')
+    else:
+        auditGenre = request.POST.get('auditGenre')
+        print(request)
+        print("票券类型：",auditGenre)
+
+        print("执行票券创建")
+        coupon = Coupon_create()
+
+        if auditGenre == '1':
+            print("创建兑换券")
+            activity_data = coupon.coupon_duihuan_xilie()
+        elif auditGenre == '2':
+            print("定额券")
+            activity_data = coupon.coupon_dinge_xilie()
+        elif auditGenre == '3':
+            print("立减券")
+            activity_data = coupon.coupon_lijian_xilie()
+        else:
+            activity_data = {'code':200,'data':"活动创建失败，请宠幸创建"}
+
+        activity = json.loads(activity_data['data'])
+        activity_id = str(activity['activityId'])
+
+        print(type(activity_id), activity_id)
+
+        audit_list = coupon.audit_query()
+        print(audit_list['data']['pageData'])
+        for pageData in audit_list['data']['pageData']:
+            print(pageData)
+            if (pageData['dateId'] == activity_id):
+                print("匹配活动ID成功")
+                audit_id = pageData['id']
+                coupon.audit_update(audit_id, activity_id, auditGenre)
+                content = {'toast':'创建成功'}
+                break
+
+        return render(request,'create_operation.html',content)
+
+
+
+
+# @login_check
 def real_time_log(request):
     return render(request,'msg_status.html')
 
