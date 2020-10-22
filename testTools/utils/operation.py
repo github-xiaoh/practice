@@ -24,7 +24,15 @@ class Coupon_create():
             'X-Region-Id':str(1)
         }
 
-    def audit_query(self):
+    def activity_list(self,couponType):
+        url = "http://operation-manage-test.smartcinemausa.com/coupon/activityList"
+        body = json.dumps({"page":1,"size":10,"activityType":0,"couponType":couponType,"discountType":"","resKey":"MENU_RESOURCE_VOUCHER"})
+        result = requests.post(url=url,data=body,headers=self.Headers)
+        resultJ = json.loads(result.content)
+        # print(resultJ)
+        return resultJ
+
+    def audit_query_auditList(self):
         """
         :return:
         """
@@ -837,7 +845,7 @@ class Coupon_create():
 #
 # print(type(activity_id),activity_id)
 #
-# audit_list = coupon.audit_query()
+# audit_list = coupon.audit_query_auditList()
 # print(audit_list['data']['pageData'])
 # for pageData in audit_list['data']['pageData']:
 #     print(pageData)
@@ -849,7 +857,23 @@ class Coupon_create():
 # coupon.audit_update(audit_id,activity_id,'3')
 
 
-
+# coupon.activity_list(couponType=2)
+# activityData = coupon.activity_list(couponType=0)
+# activityList = activityData['data']['list']
+# activity_id = '3710'
+# for activity in activityList:
+#     print(activity)
+#     print(type(activity['activityId']))
+#     if str(activity["activityId"]) == activity_id:
+#         # content['visibility'] = "visible"
+#         # content['redPacketCode'] = activity['redPacketCode']
+#         # content['code'] = activity['code']
+#         print(activity['activityId'],activity_id)
+#         print(activity['redPacketCode'],
+#               "https://h5-us-test.smartcinema.com.cn/coupon-intl-us/index.html?couponCode=" + activity[
+#                   'redPacketCode'])
+#         print(activity['code'],
+#               "https://h5-us-test.smartcinema.com.cn/exchange-common-intl-us/index.html?code=" + activity['code'])
 
 
 

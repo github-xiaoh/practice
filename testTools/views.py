@@ -346,7 +346,9 @@ def special_scene(request):
 def coupon_create(request):
 
     if request.method == "GET":
-        return render(request, 'create_operation.html')
+
+        content = {'toast':'请选择类型并提交创建','visibility':"none"}
+        return render(request, 'create_operation.html',content)
     else:
         auditGenre = request.POST.get('auditGenre')
         print(request)
@@ -357,12 +359,15 @@ def coupon_create(request):
 
         if auditGenre == '1':
             print("创建兑换券")
+            couponType = 0
             activity_data = coupon.coupon_duihuan_xilie()
         elif auditGenre == '2':
             print("定额券")
+            couponType = 1
             activity_data = coupon.coupon_dinge_xilie()
         elif auditGenre == '3':
             print("立减券")
+            couponType = 2
             activity_data = coupon.coupon_lijian_xilie()
         else:
             activity_data = {'code':200,'data':"活动创建失败，请宠幸创建"}
@@ -372,7 +377,7 @@ def coupon_create(request):
 
         print(type(activity_id), activity_id)
 
-        audit_list = coupon.audit_query()
+        audit_list = coupon.audit_query_auditList()
         print(audit_list['data']['pageData'])
         for pageData in audit_list['data']['pageData']:
             print(pageData)
@@ -382,6 +387,22 @@ def coupon_create(request):
                 coupon.audit_update(audit_id, activity_id, auditGenre)
                 content = {'toast':'创建成功'}
                 break
+
+        activityData = coupon.activity_list(couponType)
+        activityList = activityData['data']['list']
+        for activity in activityList:
+            if int(activity_id) == activity["activityId"]:
+                content['visibility'] = "visible"
+                content['redPacketCode'] = activity['redPacketCode']
+                content['code'] = activity['code']
+                print(activity['redPacketCode'],
+                      "https://h5-us-test.smartcinema.com.cn/coupon-intl-us/index.html?couponCode=" + activity[
+                          'redPacketCode'])
+                print(activity['code'],
+                      "https://h5-us-test.smartcinema.com.cn/exchange-common-intl-us/index.html?code=" + activity['code'])
+                break
+
+
 
         return render(request,'create_operation.html',content)
 
