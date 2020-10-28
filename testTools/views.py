@@ -346,27 +346,24 @@ def special_scene(request):
 def coupon_create(request):
 
     if request.method == "GET":
-
+        logger.info("请求创建卡券包页面")
         content = {'toast':'请选择类型并提交创建','visibility':"none"}
         return render(request, 'create_operation.html',content)
     else:
         auditGenre = request.POST.get('auditGenre')
-        print(request)
-        print("票券类型：",auditGenre)
-
-        print("执行票券创建")
+        logger.info("票券类型：{0}".format(auditGenre))
         coupon = Coupon_create()
-
+        logger.info("执行票券创建")
         if auditGenre == '1':
-            print("创建兑换券")
+            logger.info("创建兑换券")
             couponType = 0
             activity_data = coupon.coupon_duihuan_xilie()
         elif auditGenre == '2':
-            print("定额券")
+            logger.info("创建定额券")
             couponType = 1
             activity_data = coupon.coupon_dinge_xilie()
         elif auditGenre == '3':
-            print("立减券")
+            logger.info("创建立减券")
             couponType = 2
             activity_data = coupon.coupon_lijian_xilie()
         else:
@@ -374,15 +371,13 @@ def coupon_create(request):
 
         activity = json.loads(activity_data['data'])
         activity_id = str(activity['activityId'])
-
-        print(type(activity_id), activity_id)
-
+        # print(type(activity_id), activity_id)
         audit_list = coupon.audit_query_auditList()
-        print(audit_list['data']['pageData'])
+        # print(audit_list['data']['pageData'])
         for pageData in audit_list['data']['pageData']:
-            print(pageData)
+            logger.info("循环遍历审核列表：{0}".format(pageData))
             if (pageData['dateId'] == activity_id):
-                print("匹配活动ID成功")
+                logger.info("匹配活动ID成功")
                 audit_id = pageData['id']
                 coupon.audit_update(audit_id, activity_id, auditGenre)
                 content = {'toast':'创建成功'}
@@ -395,11 +390,8 @@ def coupon_create(request):
                 content['visibility'] = "visible"
                 content['redPacketCode'] = activity['redPacketCode']
                 content['code'] = activity['code']
-                print(activity['redPacketCode'],
-                      "https://h5-us-test.smartcinema.com.cn/coupon-intl-us/index.html?couponCode=" + activity[
-                          'redPacketCode'])
-                print(activity['code'],
-                      "https://h5-us-test.smartcinema.com.cn/exchange-common-intl-us/index.html?code=" + activity['code'])
+                logger.info("H5领取链接：{0}".format(activity['redPacketCode'],"https://h5-us-test.smartcinema.com.cn/coupon-intl-us/index.html?couponCode=" + activity['redPacketCode']))
+                logger.info("兑换码code：{0}".format(activity['code'],"https://h5-us-test.smartcinema.com.cn/exchange-common-intl-us/index.html?code=" + activity['code']))
                 break
 
 
