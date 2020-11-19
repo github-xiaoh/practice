@@ -6,13 +6,22 @@
 
 import requests
 import json
-from testTools.utils.releasefilm import goodsEditSkuEnvironment,goodsEditSkuExamine,goodsEditSkuChannel,goodsEditSkuGoodsStatus,goodsUpdateSku
+from testTools.utils.releasefilm import goodsEditSkuEnvironment,goodsEditSkuExamine,goodsEditSkuChannel,goodsEditSkuGoodsStatus,goodsUpdateSku,req_url
 
 from testTools.utils.releasefilm import getTimes
 
 
 def getPreProSpuList(regionId):
-    url = "http://goods-manage-test.smartcinemausa.com/spu/getPreProSpuList"
+    """
+    :param regionId:
+    :return:
+    """
+    reqUrl = req_url('goods', "/spu/getPreProSpuList")
+    if reqUrl:
+        url = reqUrl
+    else:
+        return "服务host匹配失败"
+
     headers = {
         'Content-Type': 'application/json',
         'X-Region-Id': str(regionId),
@@ -29,7 +38,16 @@ def getPreProSpuList(regionId):
     return resultJ
 
 def getRoomData(regionId):
-    url = "http://activity-manage-test.smartcinemausa.com/inner/activity/getRoomData"
+    """
+    :param regionId:
+    :return:
+    """
+    reqUrl = req_url('activity', "/inner/activity/getRoomData")
+    if reqUrl:
+        url = reqUrl
+    else:
+        return "服务host匹配失败"
+
     headers = {
         'X-Region-Id': str(regionId),
     }
@@ -51,7 +69,18 @@ def getRoomData(regionId):
     return resultJ
 
 def editRoom(specialName,regionId,startTime):
-    url = "http://activity-manage-test.smartcinemausa.com/inner/activity/editRoom"
+    """
+    :param specialName:
+    :param regionId:
+    :param startTime:
+    :return:
+    """
+    reqUrl = req_url('activity', "/inner/activity/editRoom")
+    if reqUrl:
+        url = reqUrl
+    else:
+        return "服务host匹配失败"
+
     headers = {
         'Content-Type': 'application/json',
         'X-Region-Id': str(regionId),
@@ -145,7 +174,17 @@ def editRoom(specialName,regionId,startTime):
     return resultJ
 
 def getDrawerInfo(roomId,regionId):
-    url = "http://activity-manage-test.smartcinemausa.com/inner/activity/getDrawerInfo"
+    """
+    :param roomId:
+    :param regionId:
+    :return:
+    """
+    reqUrl = req_url('activity', "/inner/activity/getDrawerInfo")
+    if reqUrl:
+        url = reqUrl
+    else:
+        return "服务host匹配失败"
+
     headers = {
         'Content-Type': 'application/json',
         'X-Region-Id': str(regionId),
@@ -160,7 +199,17 @@ def getDrawerInfo(roomId,regionId):
 
 
 def editDrawerInfo(roomId,regionId):
-    url = "http://activity-manage-test.smartcinemausa.com/inner/activity/editDrawerInfo"
+    """
+    :param roomId:
+    :param regionId:
+    :return:
+    """
+    reqUrl = req_url('activity', "/inner/activity/editDrawerInfo")
+    if reqUrl:
+        url = reqUrl
+    else:
+        return "服务host匹配失败"
+
     headers = {
         'Content-Type': 'application/json',
         'X-Region-Id': str(regionId),
@@ -257,7 +306,17 @@ def editDrawerInfo(roomId,regionId):
 
 
 def updateStatus(roomId,regionId):
-    url = "http://activity-manage-test.smartcinemausa.com/inner/activity/updateStatus"
+    """
+    :param roomId:
+    :param regionId:
+    :return:
+    """
+    reqUrl = req_url('activity', "/inner/activity/updateStatus")
+    if reqUrl:
+        url = reqUrl
+    else:
+        return "服务host匹配失败"
+
     headers = {
         'Content-Type': 'application/json',
         'X-Region-Id': str(regionId),

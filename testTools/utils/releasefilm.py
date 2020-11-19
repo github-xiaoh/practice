@@ -5,6 +5,29 @@ import json
 import datetime
 import time
 
+
+def req_url(host,url):
+    channel = 'http'
+
+    if host == "media":
+        host ="media-manage-test.smartcinemausa.com"
+    elif host == "goods":
+        host = "goods-manage-test.smartcinemausa.com"
+    elif host == "cms":
+        host = "cms-manage-test.smartcinemausa.com"
+    elif host == "activity":
+        host = "activity-manage-test.smartcinemausa.com"
+    elif host == "ucenter":
+        host = "ucenter-manage-test.smartcinemausa.com"
+    else:
+        reqUrl = False
+        print("服务host匹配失败")
+        return reqUrl
+
+    reqUrl = channel + "://" + host + url
+    return reqUrl
+
+
 def getTimes():
 
     nowt = time.time()
@@ -53,7 +76,12 @@ def mediaAddsource(filmName,regionId):
     :param regionId:
     :return:
     """
-    url = "http://media-manage-test.smartcinemausa.com/filmSource/add"
+    reqUrl = req_url('media', "/filmSource/add")
+    if reqUrl:
+        url = reqUrl
+    else:
+        return "服务host匹配失败"
+
     headers = {
         'Content-Type': 'application/json',
         'X-Region-Id': regionId,
@@ -75,7 +103,12 @@ def mediaGetfilmList(filmName,regionId):
     :param regionId:
     :return:
     """
-    url = "http://media-manage-test.smartcinemausa.com/filmInfo/list"
+    reqUrl = req_url('media', "/filmInfo/list")
+    if reqUrl:
+        url = reqUrl
+    else:
+        return "服务host匹配失败"
+
     headers =  {
         'Content-Type': 'application/json',
         'X-Region-Id': regionId,
@@ -96,7 +129,12 @@ def mediaSendFilm(filmId, filmName,regionId):
     :param regionId:
     :return:
     """
-    url = "http://media-manage-test.smartcinemausa.com/filmInfo/saveBaseInfo"
+    reqUrl = req_url('media', "/filmInfo/saveBaseInfo")
+    if reqUrl:
+        url = reqUrl
+    else:
+        return "服务host匹配失败"
+
     headers = {
         'Content-Type': 'application/json',
         'X-Region-Id': regionId,
@@ -157,7 +195,12 @@ def mediaAddcastInfo():
     """
     :return:
     """
-    url = "http://media-manage-test.smartcinemausa.com/filmCast/saveFilmCastList"
+    reqUrl = req_url('media', "/filmCast/saveFilmCastList")
+    if reqUrl:
+        url = reqUrl
+    else:
+        return "服务host匹配失败"
+
     headers = {
         'Content-Type': 'application/json',
         'X-Region-Id': '2',
@@ -264,7 +307,12 @@ def mediaAddphoto(filmId,regionId):
     :param regionId:
     :return:
     """
-    url = "http://media-manage-test.smartcinemausa.com/filmImage/save"
+    reqUrl = req_url('media', "/filmImage/save")
+    if reqUrl:
+        url = reqUrl
+    else:
+        return "服务host匹配失败"
+
     headers = {
         'Content-Type': 'application/json',
         'X-Region-Id': regionId,
@@ -411,7 +459,12 @@ def mediaGetPostiticeTitle(filmId, filmName,regionId):
     :param regionId:
     :return:
     """
-    url = "http://media-manage-test.smartcinemausa.com/filmPositive/list"
+    reqUrl = req_url('media', "/filmPositive/list")
+    if reqUrl:
+        url = reqUrl
+    else:
+        return "服务host匹配失败"
+
     headers = {
         'Content-Type': 'application/json',
         'X-Region-Id': regionId,
@@ -435,7 +488,12 @@ def mediaAddvideo(filmId,regionId):
     :param regionId:
     :return:
     """
-    url = "http://media-manage-test.smartcinemausa.com/filmVideo/save"
+    reqUrl = req_url('media', "/filmVideo/save")
+    if reqUrl:
+        url = reqUrl
+    else:
+        return "服务host匹配失败"
+
     headers = {
         'Content-Type': 'application/json',
         'X-Region-Id': regionId,
@@ -476,7 +534,12 @@ def mediaAddTitleValue(filmId, filmName,regionId):
     :param regionId:
     :return:
     """
-    url = "http://media-manage-test.smartcinemausa.com/filmPositive/list"
+    reqUrl = req_url('media', "/filmPositive/list")
+    if reqUrl:
+        url = reqUrl
+    else:
+        return "服务host匹配失败"
+
     headers = {
         'Content-Type': 'application/json',
         'X-Region-Id': regionId,
@@ -502,8 +565,12 @@ def goodsAddspu(filmId, filmName, startTime, endtime,regionId):
     :param regionId:
     :return:
     """
-    # url = "http://goods-manage-test.smartcinemausa.com/mediaApi/getFilmList"
-    url = "http://goods-manage-test.smartcinemausa.com/spu/addProduct"
+    reqUrl = req_url('goods', "/spu/addProduct")
+    if reqUrl:
+        url = reqUrl
+    else:
+        return "服务host匹配失败"
+
     headers = {
         'Content-Type': 'application/json',
         'X-Region-Id': regionId,
@@ -530,7 +597,12 @@ def goodsGetpositive(movieId,regionId):
     :param regionId:
     :return:
     """
-    url = "http://goods-manage-test.smartcinemausa.com/mediaApi/getFilmData"
+    reqUrl = req_url('goods', "/mediaApi/getFilmData")
+    if reqUrl:
+        url = reqUrl
+    else:
+        return "服务host匹配失败"
+
     headers = {
         'Content-Type': 'application/json',
         'X-Region-Id': regionId,
@@ -555,7 +627,12 @@ def goodsEditProduct(spuId,filmName,startTime,endTime,regionId):
     :param regionId:
     :return:
     """
-    url = "http://goods-manage-test.smartcinemausa.com//spu/editProduct"
+    reqUrl = req_url('goods', "/spu/editProduct")
+    if reqUrl:
+        url = reqUrl
+    else:
+        return "服务host匹配失败"
+
     headers = {
         'Content-Type': 'application/json',
         'X-Region-Id': regionId,
@@ -589,7 +666,12 @@ def goodsAddsku(filmId,spuName,spuId,goodsPositive,startTime,endTime,regionId):
     :param regionId:
     :return:
     """
-    url = "http://goods-manage-test.smartcinemausa.com/goods/addGoods"
+    reqUrl = req_url('goods', "/goods/addGoods")
+    if reqUrl:
+        url = reqUrl
+    else:
+        return "服务host匹配失败"
+
     headers = {
         'Content-Type': 'application/json',
         'X-Region-Id': regionId,
@@ -638,7 +720,23 @@ def goodsAddsku(filmId,spuName,spuId,goodsPositive,startTime,endTime,regionId):
     return resultJ
 
 def goodsUpdateSku(spuId,filmId,spuName,skuId,goodsPositive,spuStartTime,spuEndTime):
-    url = "http://goods-manage-test.smartcinemausa.com/goods/goodsUpdate"
+    """
+
+    :param spuId:
+    :param filmId:
+    :param spuName:
+    :param skuId:
+    :param goodsPositive:
+    :param spuStartTime:
+    :param spuEndTime:
+    :return:
+    """
+    reqUrl = req_url('goods', "/goods/goodsUpdate")
+    if reqUrl:
+        url = reqUrl
+    else:
+        return "服务host匹配失败"
+
     headers = {
         'Content-Type': 'application/json',
         'X-Region-Id': regionId,
@@ -698,7 +796,12 @@ def goodsGetSku(spuId,regionId):
     :param regionId:
     :return:
     """
-    url = "http://goods-manage-test.smartcinemausa.com/goods/getGoodsList"
+    reqUrl = req_url('goods', "/goods/getGoodsList")
+    if reqUrl:
+        url = reqUrl
+    else:
+        return "服务host匹配失败"
+
     headers = {
         'Content-Type': 'application/json',
         'X-Region-Id': regionId,
@@ -724,7 +827,12 @@ def goodsEditSkuChannel(skuId,regionId):
     :param regionId:
     :return:
     """
-    url = "http://goods-manage-test.smartcinemausa.com/sku/updateGroup"
+    reqUrl = req_url('goods', "/sku/updateGroup")
+    if reqUrl:
+        url = reqUrl
+    else:
+        return "服务host匹配失败"
+
     headers = {
         'Content-Type': 'application/json',
         'X-Region-Id': regionId,
@@ -747,7 +855,12 @@ def goodsEditSkuEnvironment(skuId,regionId):
     :param regionId:
     :return:
     """
-    url = "http://goods-manage-test.smartcinemausa.com/sku/updateEnvironment"
+    reqUrl = req_url('goods', "/sku/updateEnvironment")
+    if reqUrl:
+        url = reqUrl
+    else:
+        return "服务host匹配失败"
+
     headers = {
         'Content-Type': 'application/json',
         'X-Region-Id': regionId,
@@ -770,7 +883,12 @@ def goodsEditSkuExamine(skuId,regionId):
     :param regionId:
     :return:
     """
-    url = "http://goods-manage-test.smartcinemausa.com/sku/updateExamine"
+    reqUrl = req_url('goods', "/sku/updateExamine")
+    if reqUrl:
+        url = reqUrl
+    else:
+        return "服务host匹配失败"
+
     headers = {
         'Content-Type': 'application/json',
         'X-Region-Id': regionId,
@@ -794,7 +912,12 @@ def goodsEditSkuGoodsStatus(filmId,skuId,regionId):
     :param regionId:
     :return:
     """
-    url = "http://goods-manage-test.smartcinemausa.com/sell/updateGoodsStatus"
+    reqUrl = req_url('goods', "/sell/updateGoodsStatus")
+    if reqUrl:
+        url = reqUrl
+    else:
+        return "服务host匹配失败"
+
     headers = {
         'Content-Type': 'application/json',
         'X-Region-Id': regionId,
@@ -817,7 +940,12 @@ def cmsFilmRelease(filmId,regionId):
     :param regionId:
     :return:
     """
-    url = "http://cms-manage-test.smartcinemausa.com/cmsFilm/releaseFilm"
+    reqUrl = req_url('cms', "/cmsFilm/releaseFilm")
+    if reqUrl:
+        url = reqUrl
+    else:
+        return "服务host匹配失败"
+
     headers = {
         'Content-Type': 'application/json',
         'X-Region-Id': regionId,
@@ -832,7 +960,17 @@ def cmsFilmRelease(filmId,regionId):
 
 
 def getGuestData(regionId):
-    url = "http://ucenter-manage-test.smartcinemausa.com/ucenter/getGuestData"
+    """
+
+    :param regionId:
+    :return:
+    """
+    reqUrl = req_url('ucenter', "/ucenter/getGuestData")
+    if reqUrl:
+        url = reqUrl
+    else:
+        return "服务host匹配失败"
+
     headers = {
         'Content-Type': 'application/json',
         'X-Region-Id': str(regionId),
@@ -849,7 +987,12 @@ def getPreProSpuList(regionId):
     :param regionId:
     :return:
     """
-    url = "http://goods-manage-test.smartcinemausa.com/spu/getPreProSpuList"
+    reqUrl = req_url('goods', "/spu/getPreProSpuList")
+    if reqUrl:
+        url = reqUrl
+    else:
+        return "服务host匹配失败"
+
     headers = {
         'Content-Type': 'application/json',
         'X-Region-Id': str(regionId),
@@ -877,7 +1020,12 @@ def editRoom(specialName,filmName,spuReleaseEndtime,spuReleaseStartTime,spuId,fi
     :param startTime: 专场开始时间
     :return: 返回response信息
     """
-    url = "http://activity-manage-test.smartcinemausa.com/inner/activity/editRoom"
+    reqUrl = req_url('activity', "/inner/activity/editRoom")
+    if reqUrl:
+        url = reqUrl
+    else:
+        return "服务host匹配失败"
+
     headers = {
         'Content-Type': 'application/json',
         'X-Region-Id': str(regionId),
@@ -985,7 +1133,12 @@ def editDrawerInfo(roomId,userName,filmName,regionId):
     :param regionId:
     :return:
     """
-    url = "http://activity-manage-test.smartcinemausa.com/inner/activity/editDrawerInfo"
+    reqUrl = req_url('activity', "/inner/activity/editDrawerInfo")
+    if reqUrl:
+        url = reqUrl
+    else:
+        return "服务host匹配失败"
+
     headers = {
         'Content-Type': 'application/json',
         'X-Region-Id': str(regionId),
@@ -1114,7 +1267,12 @@ def getRoomData(filmId,regionId):
     :param regionId:
     :return:
     """
-    url = "http://activity-manage-test.smartcinemausa.com/inner/activity/getRoomData"
+    reqUrl = req_url('activity', "/inner/activity/getRoomData")
+    if reqUrl:
+        url = reqUrl
+    else:
+        return "服务host匹配失败"
+
     headers = {
         'X-Region-Id': str(regionId),
     }
@@ -1142,7 +1300,12 @@ def updateStatus(roomId,regionId):
     :param regionId:
     :return:
     """
-    url = "http://activity-manage-test.smartcinemausa.com/inner/activity/updateStatus"
+    reqUrl = req_url('activity', "/inner/activity/updateStatus")
+    if reqUrl:
+        url = reqUrl
+    else:
+        return "服务host匹配失败"
+
     headers = {
         'Content-Type': 'application/json',
         'X-Region-Id': str(regionId),
@@ -1211,8 +1374,8 @@ filmId = 4932917517541910
 userName = "开飞机的熟客了"
 userId = 532
 
-# # 编辑场信息
-#
+# 编辑场信息
+
 # room_info = editRoom(specialName,filmName,spuReleaseEndtime,spuReleaseStartTime,spuId,filmId,userName,userId,regionId,startTime)
 # print("专场信息：",room_info)
 #
