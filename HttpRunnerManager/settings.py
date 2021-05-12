@@ -42,8 +42,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ApiManager',
     'djcelery',
-    'testTools',
-    'sc_pay',
+    # 'testTools',
+    # 'sc_pay',
+    'user_ch',
+    'corsheaders' # 跨域App
 ]
 
 MIDDLEWARE = [
@@ -54,11 +56,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # 跨域配置
+
 ]
 
 MIDDLEWARE_CLASSES = [
     'dwebsocket.middleware.WebSocketMiddleware'
 ]
+
 WEBSOCKET_ACCEPT_ALL = True
 
 ROOT_URLCONF = 'HttpRunnerManager.urls'
@@ -130,16 +135,24 @@ if DEBUG:
             'ENGINE': 'django.db.backends.mysql',
             'NAME': 'sc_cms',
             'USER': 'java_test',
-            'PASSWORD': 'vsvyfcxnqq60t$iaGYxk',
-            'HOST': 'rm-0xivm2ytbx2ye3kd3.mysql.rds.aliyuncs.com',
+            'PASSWORD': 'xp6oMxo)0$Aji2ui',
+            'HOST': 'fjnyef-test.cv7bku39ibuj.us-east-1.rds.amazonaws.com',
             'PORT': '3306',
         },
         'db2': {
             'ENGINE': 'django.db.backends.mysql',
             'NAME': 'sc_pay',
             'USER': 'java_test',
-            'PASSWORD': 'vsvyfcxnqq60t$iaGYxk',
-            'HOST': 'rm-0xivm2ytbx2ye3kd3.mysql.rds.aliyuncs.com',
+            'PASSWORD': 'xp6oMxo)0$Aji2ui',
+            'HOST': 'fjnyef-test.cv7bku39ibuj.us-east-1.rds.amazonaws.com',
+            'PORT': '3306',
+        },
+        'sc_cms_ch': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'sc_cms',
+            'USER': 'java_test',
+            'PASSWORD': 'xp6oMxo)0$Aji2ui',
+            'HOST': 'rm-2ze04c849v9m32bzj.mysql.rds.aliyuncs.com',
             'PORT': '3306',
         },
     }
@@ -169,8 +182,9 @@ DATABASE_ROUTERS = ['HttpRunnerManager.database_router.DatabaseAppsRouter']
 DATABASE_APPS_MAPPING = {
     # example:
     #'app_name':'database_name',
-    'testTools': 'db1',
-    'sc_pay': 'db2',
+    # 'testTools': 'db1',
+    # 'sc_pay': 'db2',
+    'user_ch': 'sc_cms_ch',
 }
 
 
@@ -201,6 +215,49 @@ CELERYD_MAX_TASKS_PER_CHILD = 100  # 每个worker执行了多少任务就会死�
 
 EMAIL_SEND_USERNAME = '443990096@qq.com'  # 定时任务报告发送邮箱，支持163,qq,sina,企业qq邮箱等，注意需要开通smtp服务
 EMAIL_SEND_PASSWORD = 'btsfupcotihybhhj'     # 邮箱密码
+
+
+
+# 配置白名单或者全部允许
+
+# 全部允许配置
+CORS_ORIGIN_ALLOW_ALL = True
+# 白名单配置
+CORS_ORIGIN_WHITELIST = (
+    'http://127.0.0.1:8081',
+    'http://localhost:8081',
+    'http://0.0.0.0:8081',
+)
+# 允许cookie
+CORS_ALLOW_CREDENTIALS = True  # 指明在跨域访问中，后端是否支持对cookie的操作
+
+# 允许的请求方式
+CORS_ALLOW_METHODS = (
+ 'DELETE',
+ 'GET',
+ 'OPTIONS',
+ 'PATCH',
+ 'POST',
+ 'PUT',
+ 'VIEW',
+)
+# 允许的请求头
+CORS_ALLOW_HEADERS = (
+ 'XMLHttpRequest',
+ 'X_FILENAME',
+ 'accept-encoding',
+ 'authorization',
+ 'content-type',
+ 'dnt',
+ 'origin',
+ 'user-agent',
+ 'x-csrftoken',
+ 'x-requested-with',
+ 'Pragma',
+)
+
+
+
 
 LOGGING = {
     'version': 1,
@@ -299,3 +356,6 @@ LOGGING = {
         },
     }
 }
+
+
+
