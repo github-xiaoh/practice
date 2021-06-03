@@ -3,7 +3,7 @@
 
 # 海外卡券和票生成接口
 import json
-from .releasefilm import getTimes
+from .releasefilm import getTimes,req_url
 import requests
 
 
@@ -16,7 +16,12 @@ print(now_time,time_30)
 class Coupon_create():
 
     def __init__(self):
-        self.url = "http://operation-manage-test.smartcinemausa.com/coupon/addActivity"
+
+        reqUrl = req_url('operation', "/coupon/addActivity")
+        if reqUrl:
+            self.url = reqUrl
+
+        # self.url = "http://operation-manage-test.smartcinemausa.com/coupon/addActivity"
 
         self.Headers = {
             'Content-Type': "application/json",
@@ -25,7 +30,12 @@ class Coupon_create():
         }
 
     def activity_list(self,couponType):
-        url = "http://operation-manage-test.smartcinemausa.com/coupon/activityList"
+        reqUrl = req_url('operation', "/coupon/activityList")
+        if reqUrl:
+            url = reqUrl
+        else:
+            return "服务host匹配失败"
+        # url = "http://operation-manage-test.smartcinemausa.com/coupon/activityList"
         body = json.dumps({"page":1,"size":10,"activityType":0,"couponType":couponType,"discountType":"","resKey":"MENU_RESOURCE_VOUCHER"})
         result = requests.post(url=url,data=body,headers=self.Headers)
         resultJ = json.loads(result.content)
@@ -36,7 +46,12 @@ class Coupon_create():
         """
         :return:
         """
-        url = "http://user-manage-test.smartcinemausa.com/common/audit/getAuditList"
+        reqUrl = req_url('user', "/common/audit/getAuditList")
+        if reqUrl:
+            url = reqUrl
+        else:
+            return "服务host匹配失败"
+        # url = "http://user-manage-test.smartcinemausa.com/common/audit/getAuditList"
         body = json.dumps({"resKey":"MENU_OMS_AUDIT_LIST","auditGenre":"","auditName":"","currentPage":1,"pageSize":20,"auditListType":0})
         result = requests.post(url=url,data=body,headers=self.Headers)
         resultJ = json.loads(result.content)
@@ -49,7 +64,12 @@ class Coupon_create():
         :param auditGenre:
         :return:
         """
-        url = "http://user-manage-test.smartcinemausa.com/common/audit/updateAuditData"
+        reqUrl = req_url('user', "/common/audit/updateAuditData")
+        if reqUrl:
+            url = reqUrl
+        else:
+            return "服务host匹配失败"
+        # url = "http://user-manage-test.smartcinemausa.com/common/audit/updateAuditData"
         body = json.dumps({"auditStatus":1,"auditData":[{"id":str(audit_id),"dateId":activityId,"auditGenre":auditGenre}]})
         result = requests.post(url=url,data=body,headers=self.Headers)
         resultJ = json.loads(result.content)

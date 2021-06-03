@@ -8,26 +8,39 @@ import time
 
 def req_url(host,url):
     channel = 'http'
+    server_str = "aws"
+    if server_str == "ali":
+        host_str = '.smartcinemausa.com'
+    else:
+        host_str = ".smartcinema-inc.com"
+
 
     if host == "media":
-        host ="media-manage-test.smartcinemausa.com"
+        host ="media-manage-test" + host_str
     elif host == "goods":
-        host = "goods-manage-test.smartcinemausa.com"
+        host = "goods-manage-test" + host_str
     elif host == "cms":
-        host = "cms-manage-test.smartcinemausa.com"
+        host = "cms-manage-test" + host_str
     elif host == "activity":
-        host = "activity-manage-test.smartcinemausa.com"
+        host = "activity-manage-test" + host_str
     elif host == "ucenter":
-        host = "ucenter-manage-test.smartcinemausa.com"
+        host = "ucenter-manage-test" + host_str
+    elif host == "operation":
+        host = "operation-manage-test" + host_str
+    elif host == "user":
+        host = "user-manage-test" + host_str
     else:
         reqUrl = False
         print("服务host匹配失败")
         return reqUrl
-
-    reqUrl = channel + "://" + host + url
+    if server_str == "ali":
+        reqUrl = channel + "://" + host + url
+    else:
+        reqUrl = channel + "://" + server_str + "-" + host + url
+    print('请求地址：',reqUrl)
     return reqUrl
 
-
+# print(req_url('user','/aa/cc/bb'))
 def getTimes():
 
     nowt = time.time()
@@ -1113,7 +1126,7 @@ def editRoom(specialName,filmName,spuReleaseEndtime,spuReleaseStartTime,spuId,fi
             "roomId": 0,
             "celebrateVideoCover": "https://g.smartcinemausa.com/images/bfbf4ea0ec2144a48fcd91975d339a66-700-466.jpg",
             "celebrateVideoType": 2,
-            # "celebrateVideoUrl": "http://112.50.243.8/PLTV/88888888/224/3221225827/1.m3u8",
+            # "celebrateVideoUrl": "http://183.207.249.14/PLTV/3/224/3221225550/index.m3u8",  # 科教频道
             "warmVideoCover": "https://g.smartcinemausa.com/images/c2dbefb027464822bc2d5092ffadd9cc-1500-1000.jpg",
             "warmVideoType": 1,
             "warmVideoUrl": "http://smart-java-test.smartcinemausa.com/trailer/1595493080563_ieWQc.MP4",
@@ -1321,6 +1334,9 @@ def updateStatus(roomId,regionId):
     resultJ = json.loads(result.content)
     return resultJ
 
+
+
+
 # filmTime = getTimes()
 # startTime = filmTime[2]
 #
@@ -1421,6 +1437,9 @@ userId = 532
 # goodsPositive = goodsGetpositive(filmId,regionId)['data'][0]['positive'][0]['value']
 # print("查找影片正片ID：",goodsPositive)
 #
+
+# sku_id = 911
+# goodsPositive = 5014674026632768
 # print('修改商品价格：',goodsUpdateSku(spuId,filmId,filmName,sku_id,goodsPositive,spuReleaseStartTime,spuReleaseEndtime))
 #
 # # 配置专场上线

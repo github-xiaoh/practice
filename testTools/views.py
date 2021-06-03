@@ -46,10 +46,13 @@ def userInfo(request, page_page):
         print('昵称：', user_name)
         dictL = request.GET
         print('请求数据：', dictL)
-        userinfo = models.ClientUser.objects.filter(
+        user_info = models.ClientUser.objects.filter(
             u_mobile__contains=mobile, u_nickname__contains=user_name)
-
-        print("查询的用户结果：", userinfo[0])
+        print("查询的用户结果：",userInfo)
+        print("查询的用户结果：",type(userInfo))
+        print("查询的用户结果：", user_info[0])
+        user_info_test = models.ClientUser.objects.all()
+        print("user_info_test",user_info_test)
         # 循环便利获取查询结果
         # for i in userinfo:
         #     print("uId：", i.u_mobile)
@@ -57,7 +60,7 @@ def userInfo(request, page_page):
         page = Page(
             request_url='userInfo',
             page_page=page_page,
-            info_data=userinfo,
+            info_data=user_info,
             mobile=mobile,
             user_name=user_name)
         htmlStr = page.html_str()
@@ -282,6 +285,7 @@ def special_scene(request):
                             # 编辑场信息
                             room_info = editRoom(specialName, filmName, spuReleaseEndtime, spuReleaseStartTime, spuId,
                                                  filmId, userName, userId, regionId, int(round((time.time())) * 1000),specialSynopsis)
+                            print('房间信息：',room_info)
                             if room_info['msg'] == "获取影片正片信息为空":
                                 logger.info("专场信息：{room_info}".format(room_info=room_info))
                                 request.session['msg'] = "获取影片正片信息为空"

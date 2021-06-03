@@ -29,7 +29,7 @@ SECRET_KEY = '=w+1if4no=o&6!la#5j)3wsu%k@$)6bf+@3=i0h!5)h9h)$*s7'
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['*',"10.1.111.29"]
+ALLOWED_HOSTS = ['*',"10.1.111.29",'192.168.44.4']
 
 # Application definition
 
@@ -131,22 +131,22 @@ if DEBUG:
             'HOST': '127.0.0.1',  # 数据库所在服务器ip地址
             'PORT': '3306',  # 监听端口 默认3306即可
         },
-        'db1': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'sc_cms',
-            'USER': 'java_test',
-            'PASSWORD': 'xp6oMxo)0$Aji2ui',
-            'HOST': 'fjnyef-test.cv7bku39ibuj.us-east-1.rds.amazonaws.com',
-            'PORT': '3306',
-        },
-        'db2': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'sc_pay',
-            'USER': 'java_test',
-            'PASSWORD': 'xp6oMxo)0$Aji2ui',
-            'HOST': 'fjnyef-test.cv7bku39ibuj.us-east-1.rds.amazonaws.com',
-            'PORT': '3306',
-        },
+        # 'db1': {
+        #     'ENGINE': 'django.db.backends.mysql',
+        #     'NAME': 'sc_cms',
+        #     'USER': 'java_test',
+        #     'PASSWORD': 'xp6oMxo)0$Aji2ui',
+        #     'HOST': 'fjnyef-test.cv7bku39ibuj.us-east-1.rds.amazonaws.com',
+        #     'PORT': '3306',
+        # },
+        # 'db2': {
+        #     'ENGINE': 'django.db.backends.mysql',
+        #     'NAME': 'sc_pay',
+        #     'USER': 'java_test',
+        #     'PASSWORD': 'xp6oMxo)0$Aji2ui',
+        #     'HOST': 'fjnyef-test.cv7bku39ibuj.us-east-1.rds.amazonaws.com',
+        #     'PORT': '3306',
+        # },
         'sc_cms_ch': {
             'ENGINE': 'django.db.backends.mysql',
             'NAME': 'sc_cms',
@@ -227,6 +227,7 @@ CORS_ORIGIN_WHITELIST = (
     'http://127.0.0.1:8081',
     'http://localhost:8081',
     'http://0.0.0.0:8081',
+    'http://192.168.44.4:8081'
 )
 # 允许cookie
 CORS_ALLOW_CREDENTIALS = True  # 指明在跨域访问中，后端是否支持对cookie的操作
